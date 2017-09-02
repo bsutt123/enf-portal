@@ -7,4 +7,5 @@ Rails.application.routes.draw do
 
   resources :counselors
   resources :sessions
+  resources :cabins
 end
