@@ -1,0 +1,11 @@
+<%= render 'session_navbar' %>
+
+<div class="container">
+  <div class="row justify-content-center">
+    <%= link_to "Edit This Session", edit_session_path(@session), class: 'd-inline btn btn-success' %>
+    <%= link_to "Delete This Session", @session, method: :delete, class: 'd-inline btn btn-danger', data: {confirm: "Are you sure you want to delete this session?"} %>
+  </div>
+  <div> Session Number: <%= @session.number %> </div>
+  <div> Session Start: <%= @session.start %> </div>
+  <div> Session End: <%= @session.finish %> </div>
+</div>

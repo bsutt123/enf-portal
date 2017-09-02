@@ -16,9 +16,11 @@ ActiveRecord::Schema.define(version: 20170902014756) do
   enable_extension "plpgsql"
 
   create_table "cabins", force: :cascade do |t|
-    t.integer "number"
+    t.integer "number", default: 0
+    t.bigint "session_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["session_id"], name: "index_cabins_on_session_id"
   end
 
   create_table "campers", force: :cascade do |t|
@@ -56,8 +58,10 @@ ActiveRecord::Schema.define(version: 20170902014756) do
   end
 
   create_table "sessions", force: :cascade do |t|
-    t.datetime "start"
-    t.datetime "end"
+    t.integer "number"
+    t.date "start"
+    t.date "finish"
+    t.string "identifier"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
