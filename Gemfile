@@ -37,6 +37,7 @@ gem 'jbuilder', '~> 2.5'
 gem 'bootstrap', '~> 4.0.0.beta'
 gem 'bootstrap_form'
 gem 'devise'
+gem 'pry-rails', :group => :development
 
 
 group :development, :test do

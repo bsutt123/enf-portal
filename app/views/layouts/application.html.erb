@@ -9,6 +9,34 @@
   </head>
 
   <body>
+    <div class="container-fluid padding-zero">
+      <nav class="navbar navbar-light bg-faded">
+        <div class="col-8">
+          <%= link_to "Home Page", root_path, class: "navbar-brand black-text"%>
+          <% if user_signed_in? %>
+            <%= link_to 'Edit profile', edit_user_registration_path, class: 'nav-item btn black-text' %>
+            <%= link_to "Sign Out", destroy_user_session_path, method: :delete, class: 'nav-item btn black-text' %>
+          <% else %>
+            <%= link_to "Sign Up", new_user_registration_path, class: "nav-item btn black-text" %>
+            <%= link_to "Sign In", new_user_session_path, class: "nav-item btn black-text"  %>
+          <% end %>
+        </div>
+        <div class="col-4 text-right">
+          <% if user_signed_in? %>
+            Signed in as: <br /> <strong><%= current_user.email %></strong>
+          <% end %>
+        </div>
+      </nav>
+      <div class= "container-fluid">
+        <div class="row">
+          <% if alert %>
+            <div class="col-12 alert alert-danger"><%= alert %></div>
+          <% elsif notice %>
+            <div class="col-12 alert alert-info"><%= notice %></div>
+          <% end %>
+        </div>
+      </div>
+    </div>
     <%= yield %>
   </body>
 </html>

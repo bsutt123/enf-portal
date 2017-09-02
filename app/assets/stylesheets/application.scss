@@ -17,3 +17,40 @@
 
 
 @import "bootstrap";
+
+
+$color-map: (
+  primary: #388E3C,
+  accent: #FFF176,
+  secondary: #4CAF50,
+  foreground: #A5D6A7,
+  background: #C8E6C9
+);
+
+
+.bg-faded {
+  background-color: map-get($color-map,primary);
+}
+
+.margin-zero {
+  margin: 0;
+}
+
+a:visited {
+  color:inherit;
+}
+
+.padding-zero {
+  padding: 0;
+}
+.white-text{
+  color: white;
+}
+
+.black-text{
+  color: black;
+}
+
+.bg-secondary {
+  background-color: map-get($color-map, secondary)
+}
