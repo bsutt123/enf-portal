@@ -17,7 +17,6 @@ class CabinsController < ApplicationController
 
   def create
     @cabin = Cabin.new(cabin_params)
-    binding.pry
 
     if @cabin.save
       flash[:notice] = "You successfully saved the cabin"

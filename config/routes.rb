@@ -8,4 +8,7 @@ Rails.application.routes.draw do
   resources :counselors
   resources :sessions
   resources :cabins
+
+  post ':controller(/:action(/:id(.:format)))'
+  get ':controller(/:action(/:id(.:format)))'
 end
