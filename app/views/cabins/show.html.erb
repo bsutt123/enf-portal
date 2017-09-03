@@ -1,6 +1,9 @@
 <%= render "cabin_navbar" %>
-
 <div class="container">
+  <div class="row justify-content-center">
+    <%= link_to "Edit this Cabin", edit_cabin_path(@cabin), class: 'd-inline btn btn-success' %>
+    <%= link_to "Delete this Cabin", @cabin, method: :delete, class: 'd-inline btn btn-danger', data: {confirm: "Are you sure you want to delete this cabin"} %>
+  </div>
   <div> Number: <%= @cabin.number %> </div>
   <div> Session: <%= @cabin.session[:identifier] %> </div>
 </div>

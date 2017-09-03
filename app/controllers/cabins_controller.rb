@@ -28,11 +28,26 @@ class CabinsController < ApplicationController
   end
 
   def update
+    @cabin = Cabin.find(params[:id])
+    @cabin.assign_attributes(cabin_params)
 
+    if @cabin.save
+      flash[:notice] = "You successfully edited the cabin."
+    else
+      flash[:alert] = "There was a problem saving your cabin"
+    end
+    redirect_to @cabin
   end
 
   def destroy
+    @cabin = Cabin.find(params[:id])
 
+    if @cabin.destroy
+      flash[:notice] = "Cabin was successfully deleted."
+    else
+      flash[:alert] =  "There was a problem deleting your cabin"
+    end
+    redirect_to root_path
   end
 
   private
