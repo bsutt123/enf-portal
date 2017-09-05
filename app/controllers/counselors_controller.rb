@@ -18,7 +18,7 @@ class CounselorsController < ApplicationController
 
   def create
     @counselor = Counselor.new(counselor_params)
-    @user = User.create(email: params[:user][:email], password: "enfstaff123", password_confirmation: "enfstaff123")
+    @user = User.create(email: params[:counselor][:user_attributes][:email], password: "enfrules", password_confirmation: 'enfrules')
     @counselor.user = @user
     if @counselor.save
       flash[:notice] = "You successfully saved a counselor"
@@ -31,8 +31,11 @@ class CounselorsController < ApplicationController
 
   def update
     @counselor = Counselor.find(params[:id])
+    @user = @counselor.user
     @counselor.assign_attributes(counselor_params)
-    if @counselor.save
+    @user.assign_attributes(email: params[:counselor][:user_attributes][:email])
+
+    if @counselor.save && @user.save
       flash[:notice] = "You successfully changed the counselors information"
       redirect_to @counselor
     else
@@ -43,7 +46,7 @@ class CounselorsController < ApplicationController
 
   def destroy
     @counselor = Counselor.find(params[:id])
-    @user = User.find(@counselor[:user_id])
+    @user = @counselor.user
 
     couns_bool = @counselor.destroy
     user_bool = @user.destroy

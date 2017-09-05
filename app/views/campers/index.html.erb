@@ -1,0 +1,10 @@
+<%= render "camper_navbar" %>
+
+<div class="container">
+  <% @campers.each do |camper| %>
+    <div class="row">
+      <%= link_to camper.name, camper_path(camper), class: 'btn black-text' %>
+    </div>
+  <% end %>
+
+</div>

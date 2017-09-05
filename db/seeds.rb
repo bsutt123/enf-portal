@@ -6,10 +6,13 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 require 'date'
-
+Counselor.create!(
+  name: "Brady"
+)
 User.create!(
   email: "bsutt123@gmail.com",
   password: "password",
   password_confirmation: "password",
-  role: "admin"
+  role: "admin",
+  counselor_id: Counselor.find_by(name: "Brady")[:id]
 )
