@@ -3,6 +3,8 @@
     <%= f.inputs do %>
       <%= f.input :number, :include_blank => false %>
       <%= f.input :session, :member_label => :identifier, :include_blank => false  %>
+      <%= f.input :counselors, :as => :check_boxes, :include_blank => false %>
+      <%= f.input :campers, :as => :check_boxes, :include_blank => false %>
     <% end %>
     <%= f.actions do %>
       <% f.action :submit %>

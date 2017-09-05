@@ -6,6 +6,8 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 require 'date'
+require 'faker'
+
 Counselor.create!(
   name: "Brady"
 )
@@ -16,3 +18,21 @@ User.create!(
   role: "admin",
   counselor_id: Counselor.find_by(name: "Brady")[:id]
 )
+Faker::UniqueGenerator.clear
+50.times do
+  Camper.create!(
+    name:Faker::Name.unique.name
+  )
+end
+
+20.times do
+  counselor = Counselor.create!(
+    name:Faker::GameOfThrones.character
+  )
+  User.create!(
+    email:Faker::Internet.unique.email,
+    password: "password",
+    password_confirmation: "password",
+    counselor: counselor
+  )
+end

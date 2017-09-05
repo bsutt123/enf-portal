@@ -16,4 +16,7 @@ Rails.application.routes.draw do
   end
 
   resources :campers
+
+  get 'cabin/add_campers'
+
 end

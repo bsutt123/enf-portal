@@ -6,4 +6,12 @@
   </div>
   <div> Number: <%= @cabin.number %> </div>
   <div> Session: <%= @cabin.session[:identifier] %> </div>
+  <div class="row">
+    <h3> Campers </h3>
+  </div>
+  <% @cabin.campers.each  do |camper| %>
+    <span class="camper-list">
+      <%= camper.name %>
+    </span>
+  <% end %>
 </div>
