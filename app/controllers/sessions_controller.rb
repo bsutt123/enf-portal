@@ -5,6 +5,8 @@ class SessionsController < ApplicationController
 
   def show
     @session = Session.find(params[:id])
+    @cabins = @session.cabins
+    @enf_classes = @session.enf_classes
   end
 
   def new
@@ -19,8 +21,11 @@ class SessionsController < ApplicationController
     @session = Session.new(session_params)
     session_number = params[:session][:number]
     session_year = params[:session]["start(1i)"]
-    @session.assign_attributes(identifier: "session_#{session_number}_#{session_year}")
+    @session.assign_attributes(identifier: "Session #{session_number} #{session_year}")
     if @session.save
+      Cabin.numbers.keys.each do |number|
+        @session.cabins.create(number: number)
+      end
       flash[:notice] = "You successfully saved a session"
       redirect_to @session
     else
@@ -30,7 +35,7 @@ class SessionsController < ApplicationController
   end
 
   def update
-    @session = Session.find(params[:id])
+    @session = Session.find(params[:session_id])
     @session.assign_attributes(session_params)
 
     if @session.save

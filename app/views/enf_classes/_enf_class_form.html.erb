@@ -1,0 +1,10 @@
+<div class="container">
+  <%= semantic_form_for [session, enf_class] do |f| %>
+    <%= f.inputs do %>
+      <%= f.input :name %>
+    <% end %>
+    <%= f.actions do %>
+      <%= f.action :submit %>
+    <% end %>
+  <% end %>
+</div>

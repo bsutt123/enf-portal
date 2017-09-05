@@ -1,8 +1,0 @@
-<%= render "cabin_navbar" %>
-<div class="container">
-  <% @cabins.each do |cabin|%>
-    <div class="row">
-      <%= link_to "Cabin #{cabin.number} for #{cabin.session[:identifier]}", cabin_path(cabin), class: "btn black-text" %>
-    </div>
-  <% end %>
-</div>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170902014756) do
+ActiveRecord::Schema.define(version: 20170905144034) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -18,43 +18,64 @@ ActiveRecord::Schema.define(version: 20170902014756) do
   create_table "cabins", force: :cascade do |t|
     t.integer "number", default: 0
     t.bigint "session_id"
+    t.string "identifier"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["session_id"], name: "index_cabins_on_session_id"
   end
 
   create_table "campers", force: :cascade do |t|
-    t.bigint "cabin_id"
-    t.bigint "session_id"
+    t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["cabin_id"], name: "index_campers_on_cabin_id"
-    t.index ["session_id"], name: "index_campers_on_session_id"
   end
 
   create_table "counselors", force: :cascade do |t|
     t.string "name"
-    t.bigint "cabin_id"
+    t.string "email"
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["cabin_id"], name: "index_counselors_on_cabin_id"
     t.index ["user_id"], name: "index_counselors_on_user_id"
   end
 
   create_table "enf_classes", force: :cascade do |t|
     t.string "name", null: false
+    t.bigint "session_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["session_id"], name: "index_enf_classes_on_session_id"
   end
 
   create_table "instructors", force: :cascade do |t|
-    t.bigint "counselor_id"
+    t.bigint "session_counselor_id"
     t.bigint "enf_class_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["counselor_id"], name: "index_instructors_on_counselor_id"
     t.index ["enf_class_id"], name: "index_instructors_on_enf_class_id"
+    t.index ["session_counselor_id"], name: "index_instructors_on_session_counselor_id"
+  end
+
+  create_table "session_campers", force: :cascade do |t|
+    t.bigint "camper_id"
+    t.bigint "cabin_id"
+    t.bigint "session_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["cabin_id"], name: "index_session_campers_on_cabin_id"
+    t.index ["camper_id"], name: "index_session_campers_on_camper_id"
+    t.index ["session_id"], name: "index_session_campers_on_session_id"
+  end
+
+  create_table "session_counselors", force: :cascade do |t|
+    t.bigint "session_id"
+    t.bigint "cabin_id"
+    t.bigint "counselor_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["cabin_id"], name: "index_session_counselors_on_cabin_id"
+    t.index ["counselor_id"], name: "index_session_counselors_on_counselor_id"
+    t.index ["session_id"], name: "index_session_counselors_on_session_id"
   end
 
   create_table "sessions", force: :cascade do |t|
@@ -67,12 +88,12 @@ ActiveRecord::Schema.define(version: 20170902014756) do
   end
 
   create_table "students", force: :cascade do |t|
-    t.bigint "camper_id"
+    t.bigint "session_camper_id"
     t.bigint "enf_class_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["camper_id"], name: "index_students_on_camper_id"
     t.index ["enf_class_id"], name: "index_students_on_enf_class_id"
+    t.index ["session_camper_id"], name: "index_students_on_session_camper_id"
   end
 
   create_table "users", force: :cascade do |t|

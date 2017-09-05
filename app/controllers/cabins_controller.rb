@@ -17,10 +17,10 @@ class CabinsController < ApplicationController
 
   def create
     @cabin = Cabin.new(cabin_params)
-
+    @cabin.assign_attributes(identifier: "Cabin #{@cabin.number} #{@cabin.session[:identifier]}" )
     if @cabin.save
       flash[:notice] = "You successfully saved the cabin"
-      redirect_to @cabin
+      redirect_to [@cabin.session, @cabin]
     else
       flash[:alert] = "There was a problem saving the cabin"
       redirect_to root_path
@@ -36,7 +36,7 @@ class CabinsController < ApplicationController
     else
       flash[:alert] = "There was a problem saving your cabin"
     end
-    redirect_to @cabin
+    redirect_to [@cabin.session, @cabin]
   end
 
   def destroy

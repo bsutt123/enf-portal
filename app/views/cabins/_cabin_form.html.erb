@@ -1,5 +1,5 @@
 <div class="container">
-  <%= semantic_form_for cabin do |f| %>
+  <%= semantic_form_for [session, cabin] do |f| %>
     <%= f.inputs do %>
       <%= f.input :number, :include_blank => false %>
       <%= f.input :session, :member_label => :identifier, :include_blank => false  %>
@@ -8,3 +8,4 @@
       <% f.action :submit %>
     <% end %>
   <% end %>
+</div>

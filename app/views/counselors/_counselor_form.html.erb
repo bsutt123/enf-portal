@@ -1,0 +1,11 @@
+<div class="container">
+  <%= semantic_form_for counselor do |f| %>
+    <%= f.inputs do %>
+      <%= f.input :name %>
+      <%= f.input :email %>
+    <% end %>
+    <%= f.actions do %>
+      <%= f.action :submit %>
+    <% end %>
+  <% end %>
+</div>

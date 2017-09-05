@@ -17,7 +17,8 @@ class CounselorsController < ApplicationController
 
   def create
     @counselor = Counselor.new(counselor_params)
-    @user = User.create(email: "stubbed@email.com", password: "enfstaff")
+    @user = User.create(email: params[:counselor][:email], password: "enfstaff")
+    binding.pry
 
     if @counselor.save
       flash[:notice] = "You successfully saved a counselor"
@@ -61,7 +62,7 @@ class CounselorsController < ApplicationController
       flash[:alert] = "Neither the counselor nor the user were destroyed"
       redirect_to root_path
     end
-    
+
   end
 
 
@@ -69,6 +70,6 @@ class CounselorsController < ApplicationController
   private
 
   def counselor_params
-    params.require(:counselor).permit(:name, :cabin)
+    params.require(:counselor).permit(:name, :email)
   end
 end

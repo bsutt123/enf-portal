@@ -10,6 +10,10 @@ Rails.application.routes.draw do
   root 'welcome#index'
 
   resources :counselors
-  resources :sessions
-  resources :cabins
+  resources :sessions do
+    resources :cabins, except: [:index]
+    resources :enf_classes, except: [:index]
+  end
+
+  resources :campers
 end
