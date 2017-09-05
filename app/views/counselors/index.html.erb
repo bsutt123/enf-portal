@@ -1,1 +1,8 @@
 <%= render "counselor_navbar" %>
+<div class="container">
+  <% @counselors.each do |counselor| %>
+    <div class="row">
+      <%= link_to counselor.name, counselor_path(counselor), class: 'btn black-text' %>
+    </div>
+  <% end %>
+</div>

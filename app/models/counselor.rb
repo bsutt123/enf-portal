@@ -5,6 +5,6 @@ class Counselor < ApplicationRecord
   has_many :cabin_counselors
   has_many :cabins, :through => :cabin_counselors
 
-  belongs_to :user
-
+  has_one :user
+  accepts_nested_attributes_for :user
 end

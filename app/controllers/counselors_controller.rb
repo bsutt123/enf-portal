@@ -13,13 +13,13 @@ class CounselorsController < ApplicationController
 
   def new
     @counselor = Counselor.new
+    @user = User.new
   end
 
   def create
     @counselor = Counselor.new(counselor_params)
-    @user = User.create(email: params[:counselor][:email], password: "enfstaff")
-    binding.pry
-
+    @user = User.create(email: params[:user][:email], password: "enfstaff123", password_confirmation: "enfstaff123")
+    @counselor.user = @user
     if @counselor.save
       flash[:notice] = "You successfully saved a counselor"
       redirect_to @counselor
@@ -32,7 +32,6 @@ class CounselorsController < ApplicationController
   def update
     @counselor = Counselor.find(params[:id])
     @counselor.assign_attributes(counselor_params)
-
     if @counselor.save
       flash[:notice] = "You successfully changed the counselors information"
       redirect_to @counselor
@@ -70,6 +69,7 @@ class CounselorsController < ApplicationController
   private
 
   def counselor_params
-    params.require(:counselor).permit(:name, :email)
+    params.require(:counselor).permit(:name)
   end
+
 end

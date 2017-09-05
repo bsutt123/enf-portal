@@ -1,8 +1,10 @@
 <div class="container">
-  <%= semantic_form_for counselor do |f| %>
+  <%= semantic_form_for(setup_counselor(counselor)) do |f| %>
     <%= f.inputs do %>
       <%= f.input :name %>
-      <%= f.input :email %>
+      <%= f.semantic_fields_for :user do |user| %>
+        <%= user.inputs :email, :name => "User" %>
+      <% end %>
     <% end %>
     <%= f.actions do %>
       <%= f.action :submit %>
