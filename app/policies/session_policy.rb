@@ -1,9 +1,13 @@
-class CabinPolicy < ApplicationPolicy
+class SessionPolicy < ApplicationPolicy
+  def create?
+    user.admin?
+  end
+
   def update?
     user.admin?
   end
 
-  def create?
+  def delete?
     user.admin?
   end
 
@@ -12,10 +16,6 @@ class CabinPolicy < ApplicationPolicy
   end
 
   def new?
-    user.admin?
-  end
-
-  def delete?
     user.admin?
   end
 

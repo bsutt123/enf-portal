@@ -18,6 +18,16 @@ User.create!(
   role: "admin",
   counselor_id: Counselor.find_by(name: "Brady")[:id]
 )
+Counselor.create!(
+  name: "Standard"
+)
+User.create!(
+  email: "standard@example.com",
+  password: "password",
+  password_confirmation: "password",
+  role: "standard",
+  counselor_id: Counselor.find_by(name: "Standard")[:id]
+)
 Faker::UniqueGenerator.clear
 50.times do
   Camper.create!(

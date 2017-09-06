@@ -33,7 +33,7 @@ class EnfClassesController < ApplicationController
   end
 
   def destroy
-    @session = Session.find(params[:id])
+    @session = Session.find(params[:session_id])
     @enf_class = @session.enf_classes.find(params[:id])
 
     if @enf_class.destroy
@@ -84,7 +84,7 @@ class EnfClassesController < ApplicationController
   def create_instructors(array, enf_class)
     array.each do |s_counselor_id|
       if s_counselor_id != ""
-        Instructor.create(session_counselor: SessionCounselor.find(s_counselor_i), enf_class: enf_class)
+        Instructor.create(session_counselor: SessionCounselor.find(s_counselor_id), enf_class: enf_class)
       end
     end
   end

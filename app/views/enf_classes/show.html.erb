@@ -1,9 +1,9 @@
-<%= render partial: "sessions/session_navbar", locals: {session: @session} %>
+<%= render partial: "sessions/session_navbar", locals: {session: @enf_class.session} %>
 
 <div class="container">
   <div class="row">
     <%= link_to "Edit this Class", edit_session_enf_class_path(@session, @enf_class), class: 'btn btn-success' %>
-    <%= link_to "Delete this Class", [@session, @enf_class], method: :delete, class: 'btn btn-danger', data: {confirm: "Are you sure you want to delete this class"} %>
+    <%= link_to "Delete this Class", [@enf_class.session, @enf_class], method: :delete, class: 'btn btn-danger', data: {confirm: "Are you sure you want to delete this class"} %>
   </div>
   <div class="row">
     <h2> Class Information </h2>

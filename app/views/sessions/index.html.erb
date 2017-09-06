@@ -1,4 +1,4 @@
-<%= render "session_navbar" %>
+<%= render partial: "session_navbar", locals: {session: nil} %>
 
 <div class="container">
   <% @sessions.each do |session| %>

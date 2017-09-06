@@ -1,4 +1,5 @@
-class CabinPolicy < ApplicationPolicy
+class EnfClassPolicy < ApplicationPolicy
+
   def update?
     user.admin?
   end

@@ -35,7 +35,7 @@ class SessionsController < ApplicationController
   end
 
   def update
-    @session = Session.find(params[:session_id])
+    @session = Session.find(params[:id])
     @session.assign_attributes(session_params)
 
     if @session.save

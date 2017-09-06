@@ -9,16 +9,12 @@ class CabinsController < ApplicationController
 
   def new
     @cabin = Cabin.new
+    authorize @cabin
   end
 
   def edit
     @cabin = Cabin.find(params[:id])
-  end
-
-  def add_camper
-    @cabin = Cabin.find(params[:id])
-    @session = @cabin.session
-    @camper = Camper.find(params[:camper_id])
+    authorize @cabin
   end
 
 
@@ -43,19 +39,13 @@ class CabinsController < ApplicationController
 
     camper_ids = params[:cabin][:camper_ids]
     counselor_ids = params[:cabin][:counselor_ids]
+
     detonate_session_campers(@cabin)
     detonate_session_counselors(@cabin)
-    camper_ids.each do |camper_id|
-      if camper_id != ""
-        SessionCamper.create(cabin: @cabin, session: @cabin.session, camper: Camper.find(camper_id))
-      end
-    end
 
-    counselor_ids.each do |counselor_id|
-      if counselor_id != ""
-        SessionCounselor.create(cabin: @cabin, session: @cabin.session, counselor: Counselor.find(counselor_id))
-      end
-    end
+    create_session_campers(camper_ids, @cabin)
+    create_session_counselors(counselor_ids, @cabin)
+
     if @cabin.save
       flash[:notice] = "You successfully edited the cabin."
     else
@@ -92,6 +82,22 @@ class CabinsController < ApplicationController
     session_counselors = cabin.session_counselors
     session_counselors.each do |counselor|
       counselor.destroy
+    end
+  end
+
+  def create_session_campers(array, cabin)
+    array.each do |camper_id|
+      if camper_id != ""
+        SessionCamper.create(cabin: @cabin, session: @cabin.session, camper: Camper.find(camper_id))
+      end
+    end
+  end
+
+  def create_session_counselors(array, cabin)
+    array.each do |counselor_id|
+      if counselor_id != ""
+        SessionCounselor.create(cabin: @cabin, session: @cabin.session, counselor: Counselor.find(counselor_id))
+      end
     end
   end
 
