@@ -17,8 +17,10 @@ class EnfClassesController < ApplicationController
   def create
     @session = Session.find(params[:session_id])
     @enf_class = @session.enf_classes.create(enf_class_params)
+
     session_camper_ids = params[:enf_class][:session_camper_ids]
     session_counselor_ids = params[:enf_class][:session_counselor_ids]
+
     create_instructors(session_counselor_ids, @enf_class)
     create_students(session_camper_ids, @enf_class)
     if @enf_class.save

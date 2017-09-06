@@ -4,5 +4,5 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
   belongs_to :counselor
-  enum role: [:standard, :pa, :admin]
+  enum role: [:standard, :program_assistant, :admin]
 end

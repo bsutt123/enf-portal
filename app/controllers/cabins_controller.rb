@@ -24,6 +24,7 @@ class CabinsController < ApplicationController
 
   def create
     @cabin = Cabin.new(cabin_params)
+    authorize @cabin
     @cabin.assign_attributes(identifier: "Cabin #{@cabin.number} #{@cabin.session[:identifier]}" )
     if @cabin.save
       flash[:notice] = "You successfully saved the cabin"
@@ -36,6 +37,8 @@ class CabinsController < ApplicationController
 
   def update
     @cabin = Cabin.find(params[:id])
+
+    authorize @cabin
     @cabin.assign_attributes(cabin_params)
 
     camper_ids = params[:cabin][:camper_ids]
@@ -63,7 +66,7 @@ class CabinsController < ApplicationController
 
   def destroy
     @cabin = Cabin.find(params[:id])
-
+    authorize @cabin
     if @cabin.destroy
       flash[:notice] = "Cabin was successfully deleted."
     else
