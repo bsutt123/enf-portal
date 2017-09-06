@@ -2,6 +2,8 @@
   <%= semantic_form_for [session, enf_class] do |f| %>
     <%= f.inputs do %>
       <%= f.input :name %>
+      <%= f.input :session_campers, :as => :check_boxes  %>
+      <%= f.input :session_counselors, :as => :check_boxes %>
     <% end %>
     <%= f.actions do %>
       <%= f.action :submit %>

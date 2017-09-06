@@ -39,10 +39,18 @@ class CabinsController < ApplicationController
     @cabin.assign_attributes(cabin_params)
 
     camper_ids = params[:cabin][:camper_ids]
+    counselor_ids = params[:cabin][:counselor_ids]
     detonate_session_campers(@cabin)
+    detonate_session_counselors(@cabin)
     camper_ids.each do |camper_id|
       if camper_id != ""
         SessionCamper.create(cabin: @cabin, session: @cabin.session, camper: Camper.find(camper_id))
+      end
+    end
+
+    counselor_ids.each do |counselor_id|
+      if counselor_id != ""
+        SessionCounselor.create(cabin: @cabin, session: @cabin.session, counselor: Counselor.find(counselor_id))
       end
     end
     if @cabin.save
@@ -77,5 +85,11 @@ class CabinsController < ApplicationController
     end
   end
 
+  def detonate_session_counselors(cabin)
+    session_counselors = cabin.session_counselors
+    session_counselors.each do |counselor|
+      counselor.destroy
+    end
+  end
 
 end

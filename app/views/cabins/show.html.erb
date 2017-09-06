@@ -4,14 +4,28 @@
     <%= link_to "Edit this Cabin", edit_session_cabin_path(@cabin.session, @cabin), class: 'd-inline btn btn-success' %>
     <%= link_to "Delete this Cabin", [@cabin.session, @cabin], method: :delete, class: 'd-inline btn btn-danger', data: {confirm: "Are you sure you want to delete this cabin"} %>
   </div>
+  <div class="row">
+    <h3> Cabin Info </h3>
+  </div>
+
   <div> Number: <%= @cabin.number %> </div>
   <div> Session: <%= @cabin.session[:identifier] %> </div>
   <div class="row">
     <h3> Campers </h3>
   </div>
   <% @cabin.campers.each  do |camper| %>
-    <span class="camper-list">
+    <span class="c-list">
       <%= camper.name %>
+    </span>
+  <% end %>
+
+  <div class="row">
+    <h3> Counselors </h3>
+  </div>
+
+  <% @cabin.counselors.each do |counselor| %>
+    <span class="c-list">
+      <%= counselor.name %>
     </span>
   <% end %>
 </div>
