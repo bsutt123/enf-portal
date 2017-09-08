@@ -1,0 +1,9 @@
+<%= render partial: "trip_navbar" %>
+
+<div class="container">
+  <% @sessions.each do |session| %>
+    <div class="row">
+      <%= link_to session.identifier, trips_path(:session => session), class: 'btn black-text' %>
+    </div>
+  <% end %>
+</div>

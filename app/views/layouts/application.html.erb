@@ -20,6 +20,7 @@
             <%= link_to "Sign Up", new_user_registration_path, class: "nav-item btn black-text" %>
             <%= link_to "Sign In", new_user_session_path, class: "nav-item btn black-text"  %>
           <% end %>
+          <%= link_to "Trips", trip_sessions_path, class: "nav-item btn black-text" %>
         </div>
         <div class="col-4 text-right">
           <% if user_signed_in? %>

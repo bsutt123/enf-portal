@@ -15,8 +15,12 @@ Rails.application.routes.draw do
     resources :enf_classes, except: [:index]
   end
 
+  resources :trips
+
+
   resources :campers
 
-  get 'cabin/add_campers'
+
+  get 'trip_sessions', to: "trips#enf_session"
 
 end
