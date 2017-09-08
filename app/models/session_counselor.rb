@@ -3,6 +3,8 @@ class SessionCounselor < ApplicationRecord
   belongs_to :cabin
   belongs_to :counselor
 
+  has_many :trips
+
   has_many :instructors
   has_many :enf_classes, :through => :instructors
 end
