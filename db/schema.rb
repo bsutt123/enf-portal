@@ -94,12 +94,12 @@ ActiveRecord::Schema.define(version: 20170908134633) do
   end
 
   create_table "trip_campers", force: :cascade do |t|
-    t.bigint "session_campers_id"
-    t.bigint "session_counselor_id"
+    t.bigint "trip_id"
+    t.bigint "session_camper_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["session_campers_id"], name: "index_trip_campers_on_session_campers_id"
-    t.index ["session_counselor_id"], name: "index_trip_campers_on_session_counselor_id"
+    t.index ["session_camper_id"], name: "index_trip_campers_on_session_camper_id"
+    t.index ["trip_id"], name: "index_trip_campers_on_trip_id"
   end
 
   create_table "trip_counselors", force: :cascade do |t|
@@ -114,6 +114,8 @@ ActiveRecord::Schema.define(version: 20170908134633) do
   create_table "trips", force: :cascade do |t|
     t.string "description"
     t.string "destination"
+    t.boolean "requires_food"
+    t.boolean "requires_gear"
     t.bigint "session_counselor_id"
     t.bigint "session_id"
     t.string "trip_group_type"

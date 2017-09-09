@@ -46,3 +46,83 @@ end
     counselor: counselor
   )
 end
+
+
+session_one = Session.create!(
+  number: 1,
+  start: Date.new(2018,6,9),
+  finish: Date.new(2018,6,22),
+  identifier: "Session 1 2018"
+)
+Cabin.numbers.keys.each do |number|
+  session_one.cabins.create(number: number)
+end
+
+session_two = Session.create!(
+  number: 2,
+  start: Date.new(2018,6,24),
+  finish: Date.new(2018,7,14),
+  identifier: "Session 2 2018"
+)
+Cabin.numbers.keys.each do |number|
+  session_two.cabins.create(number: number)
+end
+
+session_three = Session.create!(
+  number: 3,
+  start: Date.new(2018,7,16),
+  finish: Date.new(2018,8,6),
+  identifier: "Session 3 2018"
+)
+Cabin.numbers.keys.each do |number|
+  session_three.cabins.create(number: number)
+end
+
+session_four = Session.create!(
+  number: 4,
+  start: Date.new(2018,8,8),
+  finish: Date.new(2018,8,16),
+  identifier: "Session 4 2018"
+)
+Cabin.numbers.keys.each do |number|
+  session_four.cabins.create(number: number)
+end
+
+
+sessions = Session.all
+campers = Camper.all
+counselors = Counselor.all
+
+sessions.each do |session|
+  campers.each do |camper|
+    SessionCamper.create(
+      session: session,
+      camper: camper,
+      cabin: session.cabins.sample
+    )
+  end
+  session_campers = session.session_campers
+  counselors.each do |counselor|
+    SessionCounselor.create!(
+      session: session,
+      counselor: counselor,
+      cabin: session.cabins.sample
+    )
+  end
+  session_counselors = session.session_counselors
+  10.times do
+    enf_class = EnfClass.create!(
+      session: session,
+      name: Faker::Seinfeld.quote
+    )
+
+    rand(8..12).times do
+      Student.create!(enf_class: enf_class, session_camper: session_campers.sample)
+    end
+
+    rand(1..3).times do
+      Instructor.create!(enf_class: enf_class, session_counselor: session_counselors.sample)
+    end
+  end
+
+end

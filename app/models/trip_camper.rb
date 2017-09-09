@@ -1,4 +1,4 @@
 class TripCamper < ApplicationRecord
-  t.belongs_to :session_camper
-  t.belongs_to :trip
+  belongs_to :session_camper
+  belongs_to :trip
 end

@@ -5,6 +5,8 @@
       <%= f.input :destination %>
       <%= f.input :trip_group, :collection => collection, :member_label => collection_proc %>
       <%= f.input :trip_group_type, :collection => @trip_group_types %>
+      <%= f.input :requires_food %>
+      <%= f.input :requires_gear %>
     <% end %>
     <%= f.actions do %>
       <%= f.action :submit %>

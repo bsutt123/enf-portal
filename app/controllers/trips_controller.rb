@@ -25,14 +25,17 @@ class TripsController < ApplicationController
   def create
     trip_group_type = params[:trip][:trip_group_type].constantize
     trip_group_id = params[:trip][:trip_group_id]
-
-    session = trip_group_type.find(trip_group_id)
+    trip_group = trip_group_type.find(trip_group_id)
+    session = trip_group.session
     session_counselor = SessionCounselor.find_by(session: session, counselor: current_user.counselor)
-
-    trip_group_type.trips.create(trip_params)
-    binding.pry
+    @trip = trip_group.trips.create(trip_params)
+    @trip.session_counselor = session_counselor
+    @trip.session = session
     if @trip.save
       flash[:notice] = "You successfully saved the Trip."
+      add_trip_campers(trip_group, @trip)
+      add_trip_counselors(trip_group, @trip)
+      binding.pry
       redirect_to @trip
     else
       flash[:alert] = "There was a problem saving your Trip"
@@ -58,7 +61,28 @@ class TripsController < ApplicationController
   private
 
   def trip_params
-    params.require(:trip).permit(:description, :destination, :trip_group_id)
+    params.require(:trip).permit(
+                                :description,
+                                :destination,
+                                :trip_group_id,
+                                :trip_group_type,
+                                :requires_food,
+                                :requires_gear
+                                )
   end
+
+  def add_trip_campers(group, trip)
+    group.session_campers.each do |s_camper|
+      TripCamper.create(session_camper: s_camper, trip: trip)
+    end
+  end
+
+  def add_trip_counselors(group, trip)
+    group.session_counselors.each do |s_counselor|
+      TripCounselor.create(session_counselor: s_counselor, trip: trip)
+    end
+  end
+
+
 
 end
