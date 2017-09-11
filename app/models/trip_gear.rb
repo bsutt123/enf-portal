@@ -1,0 +1,2 @@
+class TripGear < ApplicationRecord
+end
