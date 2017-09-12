@@ -13,12 +13,12 @@ Rails.application.routes.draw do
   resources :sessions do
     resources :cabins, except: [:index]
     resources :enf_classes, except: [:index]
+    resources :days, except: [:index]
   end
 
   resources :trips
-
-
   resources :campers
+  resources :days, except: [:index]
 
 
   get 'trip_sessions', to: "trips#enf_session"

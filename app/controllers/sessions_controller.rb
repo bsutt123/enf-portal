@@ -7,6 +7,7 @@ class SessionsController < ApplicationController
     @session = Session.find(params[:id])
     @cabins = @session.cabins
     @enf_classes = @session.enf_classes
+    @session_length = (@session.finish-@session.start).to_i
   end
 
   def new
@@ -26,6 +27,14 @@ class SessionsController < ApplicationController
       Cabin.numbers.keys.each do |number|
         @session.cabins.create(number: number)
       end
+      @dates = (@session.start..@session.end).to_a
+      @dates.each do |date|
+        @day = @session.days.create(date: date)
+        Period.names.keys.each_with_index do |name, index|
+          @day.periods.create(name: name, order: index)
+        end
+      end
+
       flash[:notice] = "You successfully saved a session"
       redirect_to @session
     else

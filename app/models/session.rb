@@ -2,6 +2,7 @@ class Session < ApplicationRecord
   has_many :enf_classes
   has_many :cabins
   has_many :trips
+  has_many :days
 
   has_many :session_campers
   has_many :campers, :through => :session_campers

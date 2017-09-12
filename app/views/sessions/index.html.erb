@@ -3,7 +3,7 @@
 <div class="container">
   <% @sessions.each do |session| %>
     <div class="row">
-      <%= link_to session.identifier, session_path(session), class: "btn black-text" %>
+      <%= link_to session.identifier, session_path(session, start_date: session.start), class: "btn black-text" %>
     </div>
   <% end %>
 </div>

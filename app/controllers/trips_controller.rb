@@ -35,7 +35,6 @@ class TripsController < ApplicationController
       flash[:notice] = "You successfully saved the Trip."
       add_trip_campers(trip_group, @trip)
       add_trip_counselors(trip_group, @trip)
-      binding.pry
       redirect_to @trip
     else
       flash[:alert] = "There was a problem saving your Trip"
@@ -67,7 +66,11 @@ class TripsController < ApplicationController
                                 :trip_group_id,
                                 :trip_group_type,
                                 :requires_food,
-                                :requires_gear
+                                :requires_gear,
+                                :start_day_id,
+                                :end_day_id,
+                                :start_period,
+                                :end_period
                                 )
   end
 

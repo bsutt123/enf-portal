@@ -5,6 +5,10 @@
       <%= f.input :destination %>
       <%= f.input :trip_group, :collection => collection, :member_label => collection_proc %>
       <%= f.input :trip_group_type, :collection => @trip_group_types %>
+      <%= f.input :start_day, :collection => @session.days, :member_label => :date %>
+      <%= f.input :start_period, :as => :select, :collection => Period.names.keys %>
+      <%= f.input :end_day, :collection => @session.days, :member_label => :date %>
+      <%= f.input :end_period, :as => :select, :collection => Period.names.keys %>
       <%= f.input :requires_food %>
       <%= f.input :requires_gear %>
     <% end %>

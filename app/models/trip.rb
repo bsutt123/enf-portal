@@ -8,4 +8,7 @@ class Trip < ApplicationRecord
 
   has_many :trip_counselors
   has_many :session_counselors, :through => :trip_counselors
+
+  belongs_to :start_day, :class_name => "Day", :foreign_key => 'start_day_id'
+  belongs_to :end_day, :class_name => "Day", :foreign_key => 'end_day_id'
 end

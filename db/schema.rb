@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170908134633) do
+ActiveRecord::Schema.define(version: 20170911210856) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,6 +36,15 @@ ActiveRecord::Schema.define(version: 20170908134633) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "days", force: :cascade do |t|
+    t.date "date", null: false
+    t.integer "style", default: 0
+    t.bigint "session_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["session_id"], name: "index_days_on_session_id"
+  end
+
   create_table "enf_classes", force: :cascade do |t|
     t.string "name", null: false
     t.bigint "session_id"
@@ -51,6 +60,15 @@ ActiveRecord::Schema.define(version: 20170908134633) do
     t.datetime "updated_at", null: false
     t.index ["enf_class_id"], name: "index_instructors_on_enf_class_id"
     t.index ["session_counselor_id"], name: "index_instructors_on_session_counselor_id"
+  end
+
+  create_table "periods", force: :cascade do |t|
+    t.integer "order"
+    t.integer "name"
+    t.bigint "day_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["day_id"], name: "index_periods_on_day_id"
   end
 
   create_table "session_campers", force: :cascade do |t|
@@ -111,13 +129,27 @@ ActiveRecord::Schema.define(version: 20170908134633) do
     t.index ["trip_id"], name: "index_trip_counselors_on_trip_id"
   end
 
+  create_table "trip_foods", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "trip_gears", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "trips", force: :cascade do |t|
     t.string "description"
-    t.string "destination"
+    t.text "destination"
     t.boolean "requires_food"
     t.boolean "requires_gear"
     t.bigint "session_counselor_id"
     t.bigint "session_id"
+    t.integer "start_day_id"
+    t.integer "end_day_id"
+    t.string "start_period"
+    t.string "end_period"
     t.string "trip_group_type"
     t.bigint "trip_group_id"
     t.datetime "created_at", null: false

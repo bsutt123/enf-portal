@@ -47,45 +47,33 @@ end
   )
 end
 
+dates = [
+        Date.new(2018,6,9),
+        Date.new(2018,6,22),
+        Date.new(2018,6,24),
+        Date.new(2018,7,13),
+        Date.new(2018,7,15),
+        Date.new(2018,8,3),
+        Date.new(2018,8,5),
+        Date.new(2018,8,12)]
 
-session_one = Session.create!(
-  number: 1,
-  start: Date.new(2018,6,9),
-  finish: Date.new(2018,6,22),
-  identifier: "Session 1 2018"
-)
-Cabin.numbers.keys.each do |number|
-  session_one.cabins.create(number: number)
-end
-
-session_two = Session.create!(
-  number: 2,
-  start: Date.new(2018,6,24),
-  finish: Date.new(2018,7,14),
-  identifier: "Session 2 2018"
-)
-Cabin.numbers.keys.each do |number|
-  session_two.cabins.create(number: number)
-end
-
-session_three = Session.create!(
-  number: 3,
-  start: Date.new(2018,7,16),
-  finish: Date.new(2018,8,6),
-  identifier: "Session 3 2018"
-)
-Cabin.numbers.keys.each do |number|
-  session_three.cabins.create(number: number)
-end
-
-session_four = Session.create!(
-  number: 4,
-  start: Date.new(2018,8,8),
-  finish: Date.new(2018,8,16),
-  identifier: "Session 4 2018"
-)
-Cabin.numbers.keys.each do |number|
-  session_four.cabins.create(number: number)
+(0..3).each do |index|
+  session = Session.create!(
+    number: index+1,
+    start: dates[2*index],
+    finish: dates[2*index+1],
+    identifier: "Session #{index+1} 2018"
+  )
+  Cabin.numbers.keys.each do |number|
+    session.cabins.create(number: number)
+  end
+  session_dates = (session.start..session.finish).to_a
+  session_dates.each do |date|
+    day = session.days.create(date: date)
+    Period.names.keys.each_with_index do |name, index|
+      day.periods.create(name: name, order: index)
+    end
+  end
 end
 
 
