@@ -3,6 +3,10 @@
   <div class="row justify-content-center">
     <%= link_to "New Trip for this Session", new_trip_path(session: @session), class: 'btn btn-success' %>
   </div>
+
+  <%= calendar number_of_days: @session_length do |date| %>
+    <%= link_to date, day_path(@days.where(date: date).first) %>
+  <% end %>
   <% @trips.each do |trip| %>
     <div class="row">
       <%= link_to trip.description, trip_path(trip), class: 'btn black-text' %>

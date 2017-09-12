@@ -14,24 +14,49 @@
     <%= date %>
   <% end %>
 
-  <div class="row justify-content-center">
-    <h3> Cabin List </h3>
-  </div>
-  <ul>
-  <% @cabins.each do |cabin| %>
-    <div class="row">
-      <%= link_to "Cabin #{cabin.number}", session_cabin_path(@session, cabin), class: 'btn black-text' %>
-    </div>
-  <% end %>
-  </ul>
-  <div class="row justify-content-center">
-    <h3> Class List </h3>
-  </div>
-  <ul>
-  <% @enf_classes.each do |enf_class| %>
-    <li class="row">
-      <%= link_to "#{enf_class[:name]}", session_enf_class_path(@session, enf_class), class: 'btn-black-text' %>
-    </li>
-  <% end %>
-  </ul>
-</div>
+  <h5> Cabin List </h5>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th># Campers</th>
+        <th># Counselors</th>
+        <th>Link to Cabin</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @cabins.each_with_index do |cabin, index| %>
+        <tr>
+          <th scope="row"> <%= index+1 %> </th>
+          <td> <%= cabin.number %> </td>
+          <td> <%= cabin.session_campers.count %></td>
+          <td> <%= cabin.session_counselors.count %> </td>
+          <td> <%= link_to "Details", session_cabin_path(@session, cabin) %> </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<h5> Class List </h5>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Name</th>
+      <th># Campers</th>
+      <th># Counselors</th>
+      <th>Link to Cabin</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @enf_classes.each_with_index do |enf_class, index| %>
+      <tr>
+        <th scope="row"> <%= index+1 %> </th>
+        <td> <%= enf_class.name %> </td>
+        <td> <%= enf_class.session_campers.count %></td>
+        <td> <%= enf_class.session_counselors.count %> </td>
+        <td> <%= link_to "Details", session_enf_class_path(@session, enf_class) %> </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

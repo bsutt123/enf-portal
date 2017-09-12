@@ -1,0 +1,51 @@
+<%= render partial:"sessions/session_navbar", locals: {session: @day.session} %>
+
+<div class="container">
+  <h2> Trips Today </h2>
+  <h5> Trip Departures </h5>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Description</th>
+        <th>Group</th>
+        <th>Departure period</th>
+        <th>Link to Trip</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @trip_starts.each_with_index do |trip, index| %>
+        <tr>
+          <th scope="row"> <%= index+1 %> </th>
+          <td> <%= trip.description %> </td>
+          <td> <%= trip_group_name(trip.trip_group) %></td>
+          <td> <%= trip.start_period %> </td>
+          <td> <%= link_to "Details", trip_path(trip) %> </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+    <h5> Trip Arrivals </h5>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Description</th>
+          <th>Group</th>
+          <th>Arrival period</th>
+          <th>Link to Trip</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @trip_starts.each_with_index do |trip, index| %>
+          <tr>
+            <th scope="row"> <%= index+1 %> </th>
+            <td> <%= trip.description %> </td>
+            <td> <%= trip_group_name(trip.trip_group) %></td>
+            <td> <%= trip.end_period %> </td>
+            <td> <%= link_to "Details", trip_path(trip) %> </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+</div>

@@ -5,30 +5,66 @@
     <%= link_to "Edit this Class", edit_session_enf_class_path(@session, @enf_class), class: 'btn btn-success' %>
     <%= link_to "Delete this Class", [@enf_class.session, @enf_class], method: :delete, class: 'btn btn-danger', data: {confirm: "Are you sure you want to delete this class"} %>
   </div>
-  <div class="row">
-    <h2> Class Information </h2>
-  </div>
-  <div class="row">
-    Name: <%= @enf_class.name %>
-  </div>
-  <div class="row">
-    Session: <%= @enf_class.session.identifier %>
-  </div>
-  <div class="row">
-    <h4> Counselors </h4>
-  </div>
-  <div class="row">
-    <% @enf_class.session_counselors.each do |s_counselor| %>
-      <span class="c-list"> <%= s_counselor.counselor.name %> </span>
-    <% end %>
-  </div>
+  <h2> <%= @enf_class.name %> </h2>
+  <h5> Session: <%= @enf_class.session.identifier %> </h5>
 
-  <div class="row">
-    <h4> Campers </h4>
-  </div>
-  <div class="row">
-    <% @enf_class.session_campers.each do |s_camper| %>
-      <span class="c-list"> <%= s_camper.camper.name %> </span>
+<h5> Campers </h5>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @enf_class.session_campers.each_with_index do |s_camper, index| %>
+      <tr>
+        <th scope="row"> <%= index+1 %> </th>
+        <td> <%= s_camper.camper.name %> </td>
+      </tr>
     <% end %>
-  </div>
+  </tbody>
+</table>
+<h5> Counselors </h5>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @enf_class.session_counselors.each_with_index do |s_counselor, index| %>
+      <tr>
+        <th scope="row"> <%= index+1 %> </th>
+        <td> <%= s_counselor.counselor.name %> </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<h5> Trips </h5>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Description</th>
+      <th>Departure</th>
+      <th></th>
+      <th>Link to Trip</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @enf_class.trips.each_with_index do |trip, index| %>
+      <tr>
+        <th scope="row"> <%= index+1 %> </th>
+        <td> <%= trip.description %> </td>
+        <td> <%= "#{trip.start_day.date} at period #{trip.start_period}" %></td>
+        <td> <%= "#{trip.end_day.date} at period #{trip.end_period}" %> </td>
+        <td> <%= link_to "Details", trip_path(trip) %> </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+
 </div>

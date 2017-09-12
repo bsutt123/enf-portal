@@ -1,11 +1,12 @@
 class DaysController < ApplicationController
   def show
     @day = Day.find(params[:id])
-    @session = @day.session
+    @trip_starts = @day.trip_starts
+    @trip_ends = @day.trip_ends
   end
 
   def edit
-    @day = Day.find(params[:id])
+
   end
 
   def new
