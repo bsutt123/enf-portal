@@ -22,7 +22,7 @@ Counselor.create!(
   name: "Standard",
   lifegaurd: Faker::Boolean.boolean,
   wfa: Faker::Boolean.boolean,
-  driver: Faker::Boolean.boolean
+  driver: true
 )
 User.create!(
   email: "standard@example.com",
@@ -34,13 +34,17 @@ User.create!(
 Faker::UniqueGenerator.clear
 50.times do
   Camper.create!(
-    name:Faker::Name.unique.name
+    name:Faker::Name.unique.name,
+    non_swimmer:Faker::Boolean.boolean(0.05)
   )
 end
 
 20.times do
   counselor = Counselor.create!(
-    name:Faker::GameOfThrones.character
+    name:Faker::GameOfThrones.character,
+    lifegaurd: Faker::Boolean.boolean,
+    wfa: Faker::Boolean.boolean,
+    driver: true
   )
   User.create!(
     email:Faker::Internet.unique.email,
@@ -129,6 +133,16 @@ sessions.each do |session|
       trip_group_id: enf_classes.sample[:id],
       trip_group_type: "EnfClass"
     )
+    trip_group = trip.trip_group
+    trip_group.session_counselors.each do |s_counselor|
+      TripCounselor.create(session_counselor: s_counselor, trip: trip)
+    end
+
+    trip_group.session_campers.each do |s_camper|
+      TripCamper.create(session_camper: s_camper, trip: trip)
+    end
+
+
   end
 
 end

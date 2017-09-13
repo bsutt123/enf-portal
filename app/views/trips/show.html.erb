@@ -1,0 +1,67 @@
+<%= render partial:"trip_navbar", locals: {trip: @trip}%>
+
+<div class="container">
+
+  <h5> Counselors </h5>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Driver</th>
+        <th>Lifegaurd</th>
+        <th>WFA</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @trip.session_counselors.each_with_index do |s_counselor, index| %>
+        <tr>
+          <th scope="row"> <%= index+1 %> </th>
+          <td> <%= s_counselor.counselor.name %> </td>
+          <td>
+            <% if s_counselor.counselor.lifegaurd %>
+              <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+            <% end %>
+          </td>
+          <td>
+            <% if s_counselor.counselor.driver %>
+              <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+            <% end %>
+          </td>
+          <td>
+            <% if s_counselor.counselor.wfa %>
+              <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <h5> Campers </h5>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Non Swimminer</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @trip.session_campers.each_with_index do |s_camper, index| %>
+        <tr>
+          <th scope="row"> <%= index+1 %> </th>
+          <td> <%= s_camper.camper.name %> </td>
+          <td>
+            <% if s_camper.camper.non_swimmer %>
+              <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+            <% end %>
+          </td>
+
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+
+
+</div>

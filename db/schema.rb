@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(version: 20170913141344) do
 
   create_table "campers", force: :cascade do |t|
     t.string "name"
+    t.boolean "non_swimmer"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -168,6 +169,8 @@ ActiveRecord::Schema.define(version: 20170913141344) do
     t.boolean "requires_van", default: false
     t.boolean "requires_lifeguard", default: false
     t.boolean "requires_wfa", default: false
+    t.boolean "day_trip"
+    t.boolean "approved"
     t.bigint "session_counselor_id"
     t.bigint "session_id"
     t.integer "start_day_id"

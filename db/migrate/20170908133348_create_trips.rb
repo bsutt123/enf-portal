@@ -9,7 +9,8 @@ class CreateTrips < ActiveRecord::Migration[5.1]
       t.boolean :requires_van, default: false
       t.boolean :requires_lifeguard, default: false
       t.boolean :requires_wfa, default: false
-      t.boolean :day_trip
+      t.boolean :day_trip, defaults: false
+      t.boolean :approved
 
       t.belongs_to :session_counselor, index: true
       t.belongs_to :session, index: true

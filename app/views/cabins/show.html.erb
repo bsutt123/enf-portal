@@ -10,22 +10,61 @@
 
   <div> Number: <%= @cabin.number %> </div>
   <div> Session: <%= @cabin.session[:identifier] %> </div>
-  <div class="row">
-    <h3> Campers </h3>
-  </div>
-  <% @cabin.campers.each  do |camper| %>
-    <span class="c-list">
-      <%= camper.name %>
-    </span>
-  <% end %>
-
-  <div class="row">
-    <h3> Counselors </h3>
-  </div>
-
-  <% @cabin.counselors.each do |counselor| %>
-    <span class="c-list">
-      <%= counselor.name %>
-    </span>
-  <% end %>
+  <h5> Campers </h5>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Name</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @cabin.session_campers.each_with_index do |s_camper, index| %>
+        <tr>
+          <th scope="row"> <%= index+1 %> </th>
+          <td> <%= s_camper.camper.name %> </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <h5> Counselors </h5>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Name</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @cabin.session_counselors.each_with_index do |s_counselor, index| %>
+        <tr>
+          <th scope="row"> <%= index+1 %> </th>
+          <td> <%= s_counselor.counselor.name %> </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <h5> Trips </h5>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Description</th>
+        <th>Departure</th>
+        <th></th>
+        <th>Link to Trip</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @cabin.trips.each_with_index do |trip, index| %>
+        <tr>
+          <th scope="row"> <%= index+1 %> </th>
+          <td> <%= trip.description %> </td>
+          <td> <%= "#{trip.start_day.date} at period #{trip.start_period}" %></td>
+          <td> <%= "#{trip.end_day.date} at period #{trip.end_period}" %> </td>
+          <td> <%= link_to "Details", trip_path(trip) %> </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 </div>
