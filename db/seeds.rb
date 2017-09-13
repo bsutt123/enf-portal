@@ -70,9 +70,6 @@ dates = [
   session_dates = (session.start..session.finish).to_a
   session_dates.each do |date|
     day = session.days.create(date: date)
-    Period.names.keys.each_with_index do |name, index|
-      day.periods.create(name: name, order: index)
-    end
   end
 end
 
@@ -111,6 +108,24 @@ sessions.each do |session|
     rand(1..3).times do
       Instructor.create!(enf_class: enf_class, session_counselor: session_counselors.sample)
     end
+  end
+
+  enf_classes = EnfClass.all
+  20.times do
+    day = session.days.sample
+    trip = session.trips.create!(
+      description: Faker::Pokemon.name,
+      destination: Faker::LordOfTheRings.location,
+      requires_food: Faker::Boolean.boolean,
+      requires_gear: Faker::Boolean.boolean(0.1),
+      start_day: day,
+      end_day: day,
+      start_period: "one",
+      end_period: "four",
+      session_counselor: session_counselors.sample,
+      trip_group_id: enf_classes.sample[:id],
+      trip_group_type: "EnfClass"
+    )
   end
 
 end

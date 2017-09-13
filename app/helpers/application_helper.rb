@@ -6,4 +6,8 @@ module ApplicationHelper
       "#{trip.number}"
     end
   end
+
+  def session_date_grabber(session, date)
+    session.days.where(date: date).first
+  end
 end

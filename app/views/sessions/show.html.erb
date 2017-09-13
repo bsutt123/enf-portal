@@ -11,7 +11,7 @@
   <div> Session End: <%= @session.finish %> </div>
 
   <%= calendar number_of_days: @session_length do |date| %>
-    <%= date %>
+    <%= link_to date, day_path(session_date_grabber(@session,date)), class: 'btn black-text' %>
   <% end %>
 
   <h5> Cabin List </h5>
@@ -32,7 +32,7 @@
           <td> <%= cabin.number %> </td>
           <td> <%= cabin.session_campers.count %></td>
           <td> <%= cabin.session_counselors.count %> </td>
-          <td> <%= link_to "Details", session_cabin_path(@session, cabin) %> </td>
+          <td> <%= link_to "Details", session_cabin_path(@session, cabin), class: 'btn black-text' %> </td>
         </tr>
       <% end %>
     </tbody>
@@ -55,7 +55,7 @@
         <td> <%= enf_class.name %> </td>
         <td> <%= enf_class.session_campers.count %></td>
         <td> <%= enf_class.session_counselors.count %> </td>
-        <td> <%= link_to "Details", session_enf_class_path(@session, enf_class) %> </td>
+        <td> <%= link_to "Details", session_enf_class_path(@session, enf_class), class: "btn black-text" %> </td>
       </tr>
     <% end %>
   </tbody>

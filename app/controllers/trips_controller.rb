@@ -5,7 +5,7 @@ class TripsController < ApplicationController
     @session_length = (@session.finish-@session.start).to_i
     @counselor = current_user.counselor
     @session_counselor = SessionCounselor.find_by(session: @session, counselor: @counselor)
-    @trips = @session_counselor.trips
+    @trips = @session.trips
     @days = @session.days
   end
 
