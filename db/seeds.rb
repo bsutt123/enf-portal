@@ -19,7 +19,10 @@ User.create!(
   counselor_id: Counselor.find_by(name: "Brady")[:id]
 )
 Counselor.create!(
-  name: "Standard"
+  name: "Standard",
+  lifegaurd: Faker::Boolean.boolean,
+  wfa: Faker::Boolean.boolean,
+  driver: Faker::Boolean.boolean
 )
 User.create!(
   email: "standard@example.com",

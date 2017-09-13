@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170911210856) do
+ActiveRecord::Schema.define(version: 20170913141344) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,6 +32,9 @@ ActiveRecord::Schema.define(version: 20170911210856) do
 
   create_table "counselors", force: :cascade do |t|
     t.string "name"
+    t.boolean "lifegaurd", default: false
+    t.boolean "wfa", default: false
+    t.boolean "driver", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -93,6 +96,15 @@ ActiveRecord::Schema.define(version: 20170911210856) do
     t.index ["session_id"], name: "index_session_counselors_on_session_id"
   end
 
+  create_table "session_vans", force: :cascade do |t|
+    t.bigint "session_id"
+    t.bigint "van_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["session_id"], name: "index_session_vans_on_session_id"
+    t.index ["van_id"], name: "index_session_vans_on_van_id"
+  end
+
   create_table "sessions", force: :cascade do |t|
     t.integer "number"
     t.date "start"
@@ -139,11 +151,23 @@ ActiveRecord::Schema.define(version: 20170911210856) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "trip_vans", force: :cascade do |t|
+    t.bigint "trip_id"
+    t.bigint "session_van_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["session_van_id"], name: "index_trip_vans_on_session_van_id"
+    t.index ["trip_id"], name: "index_trip_vans_on_trip_id"
+  end
+
   create_table "trips", force: :cascade do |t|
     t.string "description"
     t.text "destination"
-    t.boolean "requires_food"
-    t.boolean "requires_gear"
+    t.boolean "requires_food", default: false
+    t.boolean "requires_gear", default: false
+    t.boolean "requires_van", default: false
+    t.boolean "requires_lifeguard", default: false
+    t.boolean "requires_wfa", default: false
     t.bigint "session_counselor_id"
     t.bigint "session_id"
     t.integer "start_day_id"
@@ -177,6 +201,13 @@ ActiveRecord::Schema.define(version: 20170911210856) do
     t.index ["counselor_id"], name: "index_users_on_counselor_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  end
+
+  create_table "vans", force: :cascade do |t|
+    t.integer "number"
+    t.integer "capacity"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end

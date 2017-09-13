@@ -6,6 +6,7 @@ class TripsController < ApplicationController
     @counselor = current_user.counselor
     @session_counselor = SessionCounselor.find_by(session: @session, counselor: @counselor)
     @trips = @session.trips
+    @my_trips = @session_counselor.trips
     @days = @session.days
   end
 
@@ -33,6 +34,15 @@ class TripsController < ApplicationController
     @trip = trip_group.trips.create(trip_params)
     @trip.session_counselor = session_counselor
     @trip.session = session
+
+    if @trip.start != @trip.finish
+      if @trip.start > @trip.finish
+        flash[:alert] = "You set the start date to be after the end date!"
+        redirect_back
+      end
+      @trip.day_trip = false
+    end
+
     if @trip.save
       flash[:notice] = "You successfully saved the Trip."
       add_trip_campers(trip_group, @trip)
@@ -72,7 +82,10 @@ class TripsController < ApplicationController
                                 :start_day_id,
                                 :end_day_id,
                                 :start_period,
-                                :end_period
+                                :end_period,
+                                :requires_van,
+                                :requires_lifegaurd,
+                                :requires_wfa
                                 )
   end
 
