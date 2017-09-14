@@ -3,6 +3,7 @@ class CreateTrips < ActiveRecord::Migration[5.1]
     create_table :trips do |t|
       t.string :description
       t.text :destination
+      t.text :gear
 
       t.boolean :requires_food, default: false
       t.boolean :requires_gear, default: false

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170913141344) do
+ActiveRecord::Schema.define(version: 20170914205104) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -55,6 +55,24 @@ ActiveRecord::Schema.define(version: 20170913141344) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["session_id"], name: "index_enf_classes_on_session_id"
+  end
+
+  create_table "foods", force: :cascade do |t|
+    t.integer "apples"
+    t.integer "oranges"
+    t.integer "bananas"
+    t.integer "avocados"
+    t.integer "bags_of_chips"
+    t.integer "pitas"
+    t.integer "bread_slices"
+    t.float "lbs_turkey"
+    t.float "lbs_ham"
+    t.float "lbs_peanut_butter"
+    t.float "lbs_jelly"
+    t.bigint "trip_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["trip_id"], name: "index_foods_on_trip_id"
   end
 
   create_table "instructors", force: :cascade do |t|
@@ -142,16 +160,6 @@ ActiveRecord::Schema.define(version: 20170913141344) do
     t.index ["trip_id"], name: "index_trip_counselors_on_trip_id"
   end
 
-  create_table "trip_foods", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "trip_gears", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "trip_vans", force: :cascade do |t|
     t.bigint "trip_id"
     t.bigint "session_van_id"
@@ -164,6 +172,7 @@ ActiveRecord::Schema.define(version: 20170913141344) do
   create_table "trips", force: :cascade do |t|
     t.string "description"
     t.text "destination"
+    t.text "gear"
     t.boolean "requires_food", default: false
     t.boolean "requires_gear", default: false
     t.boolean "requires_van", default: false

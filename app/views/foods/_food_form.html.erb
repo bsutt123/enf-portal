@@ -1,0 +1,20 @@
+<div class="container">
+  <%= semantic_form_for [trip, food] do |f| %>
+    <%= f.inputs do %>
+      <%= f.input :apples %>
+      <%= f.input :oranges %>
+      <%= f.input :bananas %>
+      <%= f.input :avocados %>
+      <%= f.input :pitas %>
+      <%= f.input :bread_slices %>
+      <%= f.input :bags_of_chips %>
+      <%= f.input :lbs_turkey %>
+      <%= f.input :lbs_ham %>
+      <%= f.input :lbs_peanut_butter %>
+      <%= f.input :lbs_jelly %>
+    <% end %>
+    <%= f.actions do %>
+      <%= f.action :submit %>
+    <% end %>
+  <% end %>
+</div>

@@ -3,6 +3,8 @@ class Trip < ApplicationRecord
   belongs_to :session
   belongs_to :session_counselor
 
+  has_one :food
+
   has_many :trip_campers
   has_many :session_campers, :through => :trip_campers
 

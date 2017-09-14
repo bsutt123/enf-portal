@@ -1,2 +1,0 @@
-class TripFood < ApplicationRecord
-end

@@ -3,7 +3,14 @@
 <div class="container">
   <div class="row justify-content-center">
     <% if current_user.admin? || current_user.program_assistant? %>
-      <%= link_to "Trip Approval Page", edit_trip_path(@trip, all_campers: false), locals: {all_campers: false}, class: 'btn btn-success' %>
+      <%= link_to "Trip Approval Page", edit_trip_path(@trip, all_campers: false), class: 'btn btn-success' %>
+    <% elsif current_user == @trip.counselor.user %>
+      <%= link_to "Edit Trip Page", edit_trip_path(@trip, all_campers: false), class: 'btn btn-success' %>
+    <% end %>
+    <% if @trip.food %>
+      <%= link_to "Edit Food", edit_trip_food_path(@trip, @trip.food), class: "btn btn-success" %>
+    <% else %>
+      <%= link_to "Add Food", new_trip_food_path(@trip), class: "btn btn-success" %>
     <% end %>
   </div>
   <h5> Trip Requirements </h5>
