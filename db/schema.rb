@@ -169,14 +169,18 @@ ActiveRecord::Schema.define(version: 20170913141344) do
     t.boolean "requires_van", default: false
     t.boolean "requires_lifeguard", default: false
     t.boolean "requires_wfa", default: false
-    t.boolean "day_trip"
-    t.boolean "approved"
+    t.boolean "day_trip", default: false
+    t.boolean "approved", default: false
     t.bigint "session_counselor_id"
     t.bigint "session_id"
     t.integer "start_day_id"
+    t.date "start_date"
     t.integer "end_day_id"
+    t.date "end_date"
     t.string "start_period"
+    t.integer "start_period_num"
     t.string "end_period"
+    t.integer "end_period_num"
     t.string "trip_group_type"
     t.bigint "trip_group_id"
     t.datetime "created_at", null: false

@@ -10,5 +10,7 @@ class Session < ApplicationRecord
   has_many :session_counselors
   has_many :counselors, :through => :session_counselors
 
+  has_many :session_vans
+  has_many :vans, :through => :session_vans
 
 end

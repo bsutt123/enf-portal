@@ -1,6 +1,61 @@
 <%= render partial:"trip_navbar", locals: {trip: @trip}%>
 
 <div class="container">
+  <div class="row justify-content-center">
+    <% if current_user.admin? || current_user.program_assistant? %>
+      <%= link_to "Trip Approval Page", edit_trip_path(@trip, all_campers: false), locals: {all_campers: false}, class: 'btn btn-success' %>
+    <% end %>
+  </div>
+  <h5> Trip Requirements </h5>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th># People</th>
+        <th>Needs Food</th>
+        <th>Needs Gear</th>
+        <th>Needs a Van(s)</th>
+        <th>Needs a Lifegaurd</th>
+        <th>Needs a WFA</th>
+        <th>Approved</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td> <%= @trip.session_campers.count+@trip.session_counselors.count %>
+        <td>
+          <% if @trip.requires_food %>
+            <i class="fa fa-check" aria-hidden="true"></i>
+          <% end %>
+        </td>
+        <td>
+          <% if @trip.requires_gear %>
+            <i class="fa fa-check" aria-hidden="true"></i>
+          <% end %>
+        </td>
+        <td>
+          <% if @trip.requires_van %>
+            <i class="fa fa-check" aria-hidden="true"></i>
+          <% end %>
+        </td>
+        <td>
+          <% if @trip.requires_lifeguard %>
+            <i class="fa fa-check" aria-hidden="true"></i>
+          <% end %>
+        </td>
+        <td>
+          <% if @trip.requires_wfa %>
+            <i class="fa fa-check" aria-hidden="true"></i>
+          <% end %>
+        </td>
+        <td>
+          <% if @trip.approved %>
+            <i class="fa fa-check" aria-hidden="true"></i>
+          <% end %>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
 
   <h5> Counselors </h5>
   <table class="table table-striped">
@@ -20,17 +75,17 @@
           <td> <%= s_counselor.counselor.name %> </td>
           <td>
             <% if s_counselor.counselor.lifegaurd %>
-              <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+              <i class="fa fa-check" aria-hidden="true"></i>
             <% end %>
           </td>
           <td>
             <% if s_counselor.counselor.driver %>
-              <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+              <i class="fa fa-check" aria-hidden="true"></i>
             <% end %>
           </td>
           <td>
             <% if s_counselor.counselor.wfa %>
-              <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+              <i class="fa fa-check" aria-hidden="true"></i>
             <% end %>
           </td>
         </tr>
@@ -43,7 +98,7 @@
       <tr>
         <th>#</th>
         <th>Name</th>
-        <th>Non Swimminer</th>
+        <th>Non Swimmer</th>
       </tr>
     </thead>
     <tbody>
@@ -53,7 +108,7 @@
           <td> <%= s_camper.camper.name %> </td>
           <td>
             <% if s_camper.camper.non_swimmer %>
-              <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+              <i class="fa fa-check" aria-hidden="true"></i>
             <% end %>
           </td>
 

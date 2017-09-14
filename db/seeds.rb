@@ -11,7 +11,7 @@ require 'faker'
 Counselor.create!(
   name: "Brady"
 )
-User.create!(
+User.where(email: "bsutt123@gmail.com").first_or_create!(
   email: "bsutt123@gmail.com",
   password: "password",
   password_confirmation: "password",
@@ -54,6 +54,11 @@ end
   )
 end
 
+(1..10).each do |number|
+  Van.create!(number: number, capacity: 15)
+end
+
+
 dates = [
         Date.new(2018,6,9),
         Date.new(2018,6,22),
@@ -84,8 +89,16 @@ end
 sessions = Session.all
 campers = Camper.all
 counselors = Counselor.all
-
+vans = Van.all
 sessions.each do |session|
+  vans.each do |van|
+    SessionVan.create!(
+      session: session,
+      van: van
+    )
+  end
+
+
   campers.each do |camper|
     SessionCamper.create(
       session: session,
@@ -118,17 +131,26 @@ sessions.each do |session|
   end
 
   enf_classes = EnfClass.all
+  periods = Period.names.keys
   20.times do
     day = session.days.sample
     trip = session.trips.create!(
       description: Faker::Pokemon.name,
       destination: Faker::LordOfTheRings.location,
       requires_food: Faker::Boolean.boolean,
-      requires_gear: Faker::Boolean.boolean(0.1),
+      requires_gear: Faker::Boolean.boolean,
+      requires_van: true,
+      requires_lifeguard: Faker::Boolean.boolean,
+      requires_wfa: Faker::Boolean.boolean,
       start_day: day,
+      start_date: day.date,
       end_day: day,
+      end_date: day.date,
+      day_trip: true,
       start_period: "one",
+      start_period_num: periods.index("one"),
       end_period: "four",
+      end_period_num: periods.index("four")
       session_counselor: session_counselors.sample,
       trip_group_id: enf_classes.sample[:id],
       trip_group_type: "EnfClass"

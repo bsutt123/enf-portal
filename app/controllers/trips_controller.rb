@@ -16,6 +16,26 @@ class TripsController < ApplicationController
 
   def edit
     @trip = Trip.find(params[:id])
+    @session = @trip.session
+    @all_approved_trips = @session.trips.where(approved: true)
+    binding.pry
+    s_van_ids = @session.session_van_ids
+    used_vans = []
+    @all_approved_trips.each do |approved_trip|
+      binding.pry
+      if determine_overlap(approved_trip, @trip)
+        approved_trip.session_van_ids.each do |s_van_id|
+          used_vans << s_van_id
+        end
+      end
+    end
+    s_van_ids -= used_vans
+    @possible_vans = s_van_ids.map do |s_van_id|
+      @session.session_vans.find(s_van_id)
+    end
+    @trip.session_vans.each do |s_van|
+      @possible_vans << s_van
+    end
   end
 
   def new
@@ -34,6 +54,13 @@ class TripsController < ApplicationController
     @trip = trip_group.trips.create(trip_params)
     @trip.session_counselor = session_counselor
     @trip.session = session
+    @trip.start_date = @trip.start_day.date
+    @trip.end_date = @trip.end_date.date
+
+    periods = Period.names.keys
+
+    @trip.start_period_num = periods.index(@trip.start_period)
+    @trip.end_period_num = periods.index(@trip.end_period)
 
     if @trip.start != @trip.finish
       if @trip.start > @trip.finish
@@ -58,6 +85,33 @@ class TripsController < ApplicationController
     @trip = Trip.find(params[:id])
     @trip.assign_attributes(trip_params)
 
+    @trip.start_date = @trip.start_day.date
+    @trip.end_date = @trip.end_date.date
+
+    periods = Period.names.keys
+
+    @trip.start_period_num = periods.index(@trip.start_period)
+    @trip.end_period_num = periods.index(@trip.end_period)
+
+    if @trip.save
+      if current_user.admin? || current_user.program_assistant?
+        flash[:notice] = "you successfully approved the trip"
+      else
+        flash[:notice] = "you succesfully saved the edits to your trip"
+      end
+      detonate_trip_campers(@trip)
+      detonate_trip_counselors(@trip)
+      create_trip_campers(params[:trip][:session_camper_ids], @trip)
+      create_trip_counselors(params[:trip][:session_counselor_ids], @trip)
+
+      if @trip.approved
+        detonate_trip_vans(@trip)
+        create_trip_vans(params[:trip][:session_van_ids], @trip)
+      end
+    else
+      flash[:notice] = "There was a problem saving the changes to the trip"
+    end
+    redirect_to @trip
   end
 
   def destroy
@@ -84,8 +138,9 @@ class TripsController < ApplicationController
                                 :start_period,
                                 :end_period,
                                 :requires_van,
-                                :requires_lifegaurd,
-                                :requires_wfa
+                                :requires_lifeguard,
+                                :requires_wfa,
+                                :approved
                                 )
   end
 
@@ -100,6 +155,80 @@ class TripsController < ApplicationController
       TripCounselor.create(session_counselor: s_counselor, trip: trip)
     end
   end
+
+  def create_trip_vans(s_van_ids, trip)
+    s_van_ids.each do |s_van_id|
+      if s_van_id != ""
+        TripVan.create(session_van: SessionVan.find(s_van_id), trip: trip)
+      end
+    end
+  end
+
+  def detonate_trip_vans(trip)
+    trip_vans = trip.trip_vans
+    trip_vans.each do |trip_van|
+      trip_van.destroy
+    end
+  end
+
+  def create_trip_campers(array, trip)
+    array.each do |s_camper_id|
+      if s_camper_id != ""
+        TripCamper.create(session_camper: SessionCamper.find(s_camper_id), trip: trip)
+      end
+    end
+  end
+
+  def create_trip_counselors(array, trip)
+    array.each do |s_counselor_id|
+      if s_counselor_id != ""
+        TripCounselor.create(session_counselor: SessionCounselor.find(s_counselor_id), trip: trip)
+      end
+    end
+  end
+
+  def detonate_trip_campers(trip)
+    trip_campers = trip.trip_campers
+    trip_campers.each do |trip_camper|
+      trip_camper.destroy
+    end
+
+  end
+
+  def detonate_trip_counselors(trip)
+    trip_counselors = trip.trip_counselors
+    trip_counselors.each do |trip_counselor|
+      trip_counselor.destroy
+    end
+  end
+
+  def determine_overlap(approved_trip, submitted_trip)
+    periods = Period.names.keys
+    a_trip_start_date = approved_trip.start_day.date
+    a_trip_start_period = periods.index(approved_trip.start_period)
+
+    a_trip_end_date = approved_trip.end_day.date
+    a_trip_end_period = periods.index(approved_trip.end_period)
+
+    s_trip_start_date = submitted_trip.start_day.date
+    s_trip_start_period = periods.index(submitted_trip.start_period)
+
+    s_trip_end_date = submitted_trip.end_day.date
+    s_trip_end_period = periods.index(submitted_trip.end_period)
+
+    if a_trip_start_date > s_trip_end_date
+      false
+    elsif a_trip_start_date == s_trip_end_date && a_trip_start_period > s_trip_end_period
+      false
+    elsif a_trip_end_date < s_trip_start_date
+      false
+    elsif a_trip_end_date == s_trip_start_date && a_trip_end_period < s_trip_start_period
+      false
+    else
+      true
+    end
+  end
+
 
 
 

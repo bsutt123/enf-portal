@@ -1,0 +1,31 @@
+<div class="container">
+  <%= semantic_form_for trip do |f| %>
+    <%= f.inputs do %>
+      <h1><%= f.input :approved %></h1>
+      <%= f.input :description %>
+      <%= f.input :destination %>
+      <%= f.input :start_day, :collection => trip.session.days, :member_label => :date %>
+      <%= f.input :start_period, :as => :select, :collection => Period.names.keys %>
+      <%= f.input :end_day, :collection => trip.session.days, :member_label => :date %>
+      <%= f.input :end_period, :as => :select, :collection => Period.names.keys %>
+      <%= f.input :requires_food %>
+      <%= f.input :requires_gear %>
+      <%= f.input :requires_van %>
+      <%= f.input :requires_lifeguard %>
+      <%= f.input :requires_wfa %>
+      <% if current_user.admin? || current_user.program_assistant? %>
+        <%=  f.input :session_vans, :collection => @possible_vans, :as => :check_boxes, :member_label => van_proc %>
+      <% end %>
+      <% if params[:all_campers] == true %>
+        <%= f.input :session_campers, :as => :check_boxes, :member_label => session_camper_proc  %>
+        <%= f.input :session_counselors, :as => :check_boxes, :member_label => session_counselor_proc %>
+      <% else %>
+        <%= f.input :session_campers, :as => :check_boxes, :collection => trip.trip_group.session_campers, :member_label => session_camper_proc  %>
+        <%= f.input :session_counselors, :as => :check_boxes, :collection => trip.trip_group.session_counselors, :member_label => session_counselor_proc %>
+      <% end %>
+    <% end %>
+    <%= f.actions do %>
+      <%= f.action :submit %>
+    <% end %>
+  <% end %>
+</div>

@@ -1,4 +1,6 @@
 class Trip < ApplicationRecord
+  scope :leaves_on -> (date) { order("start_day.date desc").where()}
+
   belongs_to :trip_group, polymorphic: true
   belongs_to :session
   belongs_to :session_counselor
