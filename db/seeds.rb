@@ -131,9 +131,9 @@ sessions.each do |session|
   end
 
   enf_classes = EnfClass.all
-  periods = Period.names.keys
   20.times do
     day = session.days.sample
+    date = day.date
     trip = session.trips.create!(
       description: Faker::Pokemon.name,
       destination: Faker::LordOfTheRings.location,
@@ -143,14 +143,10 @@ sessions.each do |session|
       requires_lifeguard: Faker::Boolean.boolean,
       requires_wfa: Faker::Boolean.boolean,
       start_day: day,
-      start_date: day.date,
       end_day: day,
-      end_date: day.date,
       day_trip: true,
-      start_period: "one",
-      start_period_num: periods.index("one"),
-      end_period: "four",
-      end_period_num: periods.index("four")
+      start: DateTime.new(date.year, date.month, date.day, 9,0,0),
+      finish: DateTime.new(date.year, date.month, date.day, 17,0,0),
       session_counselor: session_counselors.sample,
       trip_group_id: enf_classes.sample[:id],
       trip_group_type: "EnfClass"

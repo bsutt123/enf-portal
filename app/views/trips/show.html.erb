@@ -56,6 +56,26 @@
     </tbody>
   </table>
 
+  <h5> Vans assigned to this trip </h5>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Number</th>
+        <th>Capacity</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @trip.session_vans.each_with_index do |s_van, index| %>
+        <tr>
+          <th scope="row"> <%= index+1 %> </th>
+          <td> <%= s_counselor.counselor.name %> </td>
+          <td> <%= s_van.van.number %> </td>
+          <td> <%= s_van.van.capacity %> </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 
   <h5> Counselors </h5>
   <table class="table table-striped">

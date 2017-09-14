@@ -4,10 +4,8 @@
       <h1><%= f.input :approved %></h1>
       <%= f.input :description %>
       <%= f.input :destination %>
-      <%= f.input :start_day, :collection => trip.session.days, :member_label => :date %>
-      <%= f.input :start_period, :as => :select, :collection => Period.names.keys %>
-      <%= f.input :end_day, :collection => trip.session.days, :member_label => :date %>
-      <%= f.input :end_period, :as => :select, :collection => Period.names.keys %>
+      <%= f.input :start, :as => :datetime_picker, :label => "Expected Departure"%>
+      <%= f.input :finish, :as => :datetime_picker, :label => "Expected Arrival"%>
       <%= f.input :requires_food %>
       <%= f.input :requires_gear %>
       <%= f.input :requires_van %>

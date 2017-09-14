@@ -12,23 +12,15 @@ class CreateTrips < ActiveRecord::Migration[5.1]
       t.boolean :day_trip, default: false
       t.boolean :approved, default: false
 
-
-
       t.belongs_to :session_counselor, index: true
       t.belongs_to :session, index: true
 
+      t.datetime :start
+      t.datetime :finish
+
       t.integer :start_day_id
-      t.date :start_date
-
       t.integer :end_day_id
-      t.date :end_date
 
-      t.string :start_period
-      t.integer :start_period_num
-
-      t.string :end_period
-      t.integer :end_period_num
-      
       t.references :trip_group, polymorphic: true, index: true
       t.timestamps
     end

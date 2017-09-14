@@ -173,14 +173,10 @@ ActiveRecord::Schema.define(version: 20170913141344) do
     t.boolean "approved", default: false
     t.bigint "session_counselor_id"
     t.bigint "session_id"
+    t.datetime "start"
+    t.datetime "finish"
     t.integer "start_day_id"
-    t.date "start_date"
     t.integer "end_day_id"
-    t.date "end_date"
-    t.string "start_period"
-    t.integer "start_period_num"
-    t.string "end_period"
-    t.integer "end_period_num"
     t.string "trip_group_type"
     t.bigint "trip_group_id"
     t.datetime "created_at", null: false

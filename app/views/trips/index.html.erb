@@ -17,8 +17,8 @@
         <th>#</th>
         <th>Description</th>
         <th>Group</th>
-        <th>Departure period</th>
-        <th>Return period</th>
+        <th>Departure</th>
+        <th>Return</th>
         <th>Link to Trip</th>
       </tr>
     </thead>
@@ -28,8 +28,8 @@
           <th scope="row"> <%= index+1 %> </th>
           <td> <%= trip.description %> </td>
           <td> <%= trip_group_name(trip.trip_group) %></td>
-          <td> <%= trip.start_period %> </td>
-          <td> <%= trip.end_period %> </td>
+          <td> <%= format_datetime(trip.start) %> </td>
+          <td> <%= format_datetime(trip.finish) %> </td>
           <td> <%= link_to "Details", trip_path(trip) %> </td>
         </tr>
       <% end %>
@@ -55,8 +55,8 @@
           <th scope="row"> <%= index+1 %> </th>
           <td> <%= trip.description %> </td>
           <td> <%= trip_group_name(trip.trip_group) %></td>
-          <td> <%= trip.start_period %> </td>
-          <td> <%= trip.end_period %> </td>
+          <td> <%= format_datetime(trip.start) %> </td>
+          <td> <%= format_datetime(trip.finish) %> </td>
           <td> <%= link_to "Details", trip_path(trip) %> </td>
         </tr>
       <% end %>

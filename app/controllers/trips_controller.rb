@@ -17,16 +17,12 @@ class TripsController < ApplicationController
   def edit
     @trip = Trip.find(params[:id])
     @session = @trip.session
-    @all_approved_trips = @session.trips.where(approved: true)
-    binding.pry
+    overlapping_trips = overlapping_approved_trips(@trip)
     s_van_ids = @session.session_van_ids
     used_vans = []
-    @all_approved_trips.each do |approved_trip|
-      binding.pry
-      if determine_overlap(approved_trip, @trip)
-        approved_trip.session_van_ids.each do |s_van_id|
-          used_vans << s_van_id
-        end
+    overlapping_trips.each do |approved_trip|
+      approved_trip.session_van_ids.each do |s_van_id|
+        used_vans << s_van_id
       end
     end
     s_van_ids -= used_vans
@@ -54,14 +50,13 @@ class TripsController < ApplicationController
     @trip = trip_group.trips.create(trip_params)
     @trip.session_counselor = session_counselor
     @trip.session = session
-    @trip.start_date = @trip.start_day.date
-    @trip.end_date = @trip.end_date.date
 
-    periods = Period.names.keys
+    @trip.start_day = Day.find_by(date: @trip.start.to_date)
+    @trip.end_day = Day.find_by(date: @trip.finish.to_date)
 
-    @trip.start_period_num = periods.index(@trip.start_period)
-    @trip.end_period_num = periods.index(@trip.end_period)
-
+    if @trip.start.to_date == @trip.finish.to_date
+      @trip.day_trip = true
+    end
     if @trip.start != @trip.finish
       if @trip.start > @trip.finish
         flash[:alert] = "You set the start date to be after the end date!"
@@ -85,14 +80,12 @@ class TripsController < ApplicationController
     @trip = Trip.find(params[:id])
     @trip.assign_attributes(trip_params)
 
-    @trip.start_date = @trip.start_day.date
-    @trip.end_date = @trip.end_date.date
+    @trip.start_day = Day.find_by(date: @trip.start.to_date)
+    @trip.end_day = Day.find_by(date: @trip.finish.to_date)
 
-    periods = Period.names.keys
-
-    @trip.start_period_num = periods.index(@trip.start_period)
-    @trip.end_period_num = periods.index(@trip.end_period)
-
+    if @trip.start.to_date == @trip.finish.to_date
+      @trip.day_trip = true
+    end
     if @trip.save
       if current_user.admin? || current_user.program_assistant?
         flash[:notice] = "you successfully approved the trip"
@@ -133,10 +126,8 @@ class TripsController < ApplicationController
                                 :trip_group_type,
                                 :requires_food,
                                 :requires_gear,
-                                :start_day_id,
-                                :end_day_id,
-                                :start_period,
-                                :end_period,
+                                :start,
+                                :finish,
                                 :requires_van,
                                 :requires_lifeguard,
                                 :requires_wfa,
@@ -201,34 +192,6 @@ class TripsController < ApplicationController
       trip_counselor.destroy
     end
   end
-
-  def determine_overlap(approved_trip, submitted_trip)
-    periods = Period.names.keys
-    a_trip_start_date = approved_trip.start_day.date
-    a_trip_start_period = periods.index(approved_trip.start_period)
-
-    a_trip_end_date = approved_trip.end_day.date
-    a_trip_end_period = periods.index(approved_trip.end_period)
-
-    s_trip_start_date = submitted_trip.start_day.date
-    s_trip_start_period = periods.index(submitted_trip.start_period)
-
-    s_trip_end_date = submitted_trip.end_day.date
-    s_trip_end_period = periods.index(submitted_trip.end_period)
-
-    if a_trip_start_date > s_trip_end_date
-      false
-    elsif a_trip_start_date == s_trip_end_date && a_trip_start_period > s_trip_end_period
-      false
-    elsif a_trip_end_date < s_trip_start_date
-      false
-    elsif a_trip_end_date == s_trip_start_date && a_trip_end_period < s_trip_start_period
-      false
-    else
-      true
-    end
-  end
-
 
 
 

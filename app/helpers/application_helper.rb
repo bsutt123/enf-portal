@@ -23,4 +23,16 @@ module ApplicationHelper
     return Proc.new {|x| x.van.number}
   end
 
+
+  def overlapping_approved_trips(trip)
+    Trip.where("start BETWEEN :trip_start AND :trip_end OR finish BETWEEN :trip_start AND :trip_end OR start <= :trip_start AND finish >= :trip_end", {trip_start: trip.start, trip_end: trip.finish}).where.not(trip[:id]).where(approved: true)
+  end
+
+  def format_datetime(time)
+    time.strftime("%a %b %e at %k:%M")
+  end
+
+  def format_datetime_time(time)
+
+  end
 end
