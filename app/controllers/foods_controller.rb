@@ -34,18 +34,6 @@ class FoodsController < ApplicationController
   private
 
   def trip_food_params
-    params.require(:food).permit(
-                                      :apples,
-                                      :oranges,
-                                      :bananas,
-                                      :avocados,
-                                      :pitas,
-                                      :bags_of_chips,
-                                      :bread_slices,
-                                      :lbs_turkey,
-                                      :lbs_ham,
-                                      :lbs_peanut_butter,
-                                      :lbs_jelly
-                                      )
+    params.require(:food).permit!
   end
 end
