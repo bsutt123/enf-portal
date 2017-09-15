@@ -8,48 +8,75 @@
   <h2> <%= @enf_class.name %> </h2>
   <h5> Session: <%= @enf_class.session.identifier %> </h5>
 
-<h5> Campers </h5>
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th>#</th>
-      <th>Name</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @enf_class.session_campers.each_with_index do |s_camper, index| %>
+  <h5> Counselors </h5>
+  <table class="table table-striped">
+    <thead>
       <tr>
-        <th scope="row"> <%= index+1 %> </th>
-        <td> <%= s_camper.camper.name %> </td>
+        <th>#</th>
+        <th>Name</th>
+        <th>Lifeguard</th>
+        <th>Driver</th>
+        <th>WFA</th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
-<h5> Counselors </h5>
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th>#</th>
-      <th>Name</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @enf_class.session_counselors.each_with_index do |s_counselor, index| %>
+    </thead>
+    <tbody>
+      <% @enf_class.session_counselors.each_with_index do |s_counselor, index| %>
+        <tr>
+          <th scope="row"> <%= index+1 %> </th>
+          <td> <%= s_counselor.counselor.name %> </td>
+          <td>
+            <% if s_counselor.counselor.lifegaurd %>
+              <i class="fa fa-check" aria-hidden="true"></i>
+            <% end %>
+          </td>
+          <td>
+            <% if s_counselor.counselor.driver %>
+              <i class="fa fa-check" aria-hidden="true"></i>
+            <% end %>
+          </td>
+          <td>
+            <% if s_counselor.counselor.wfa %>
+              <i class="fa fa-check" aria-hidden="true"></i>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <h5> Campers </h5>
+  <table class="table table-striped">
+    <thead>
       <tr>
-        <th scope="row"> <%= index+1 %> </th>
-        <td> <%= s_counselor.counselor.name %> </td>
+        <th>#</th>
+        <th>Name</th>
+        <th>Non Swimmer?</th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
-<h5> Trips </h5>
+    </thead>
+    <tbody>
+      <% @enf_class.session_campers.each_with_index do |s_camper, index| %>
+        <tr>
+          <th scope="row"> <%= index+1 %> </th>
+          <td> <%= s_camper.camper.name %> </td>
+          <td>
+            <% if s_camper.camper.non_swimmer %>
+              <i class="fa fa-check" aria-hidden="true"></i>
+            <% end %>
+          </td
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+
+<h5> Trips  </h5>
 <table class="table table-striped">
   <thead>
     <tr>
       <th>#</th>
       <th>Description</th>
-      <th>Departure</th>
-      <th></th>
+      <th>Departure Time</th>
+      <th>Arrival Time</th>
       <th>Link to Trip</th>
     </tr>
   </thead>
@@ -58,9 +85,9 @@
       <tr>
         <th scope="row"> <%= index+1 %> </th>
         <td> <%= trip.description %> </td>
-        <td> <%= "#{trip.start_day.date} at period #{trip.start_period}" %></td>
-        <td> <%= "#{trip.end_day.date} at period #{trip.end_period}" %> </td>
-        <td> <%= link_to "Details", trip_path(trip) %> </td>
+        <td> <%= format_datetime(trip.start) %> </td>
+        <td> <%= format_datetime(trip.finish) %> </td>
+        <td> <%= link_to "Details", trip_path(trip), class: 'btn black-text' %> </td>
       </tr>
     <% end %>
   </tbody>

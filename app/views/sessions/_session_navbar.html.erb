@@ -3,9 +3,7 @@
     <nav class="navbar">
       <%= link_to "Sessions List", sessions_path, class: 'nav-item btn black-text' %>
       <%= link_to "Create a Session", new_session_path, class: 'nav-item btn black-text' %>
-      <% if session != nil %>
-        <%= link_to "Current Session", session_path(session), class: 'nav-item btn black-text' %>
-      <% end %>
+      <%= link_to "Current Session", session_path(current_session, start_date: current_session.start), class: 'nav-item btn black-text' %>
     </nav>
   </div>
 </div>

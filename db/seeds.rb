@@ -149,7 +149,8 @@ sessions.each do |session|
       finish: DateTime.new(date.year, date.month, date.day, 17,0,0),
       session_counselor: session_counselors.sample,
       trip_group_id: enf_classes.sample[:id],
-      trip_group_type: "EnfClass"
+      trip_group_type: "EnfClass",
+      approved: true,
     )
     trip_group = trip.trip_group
     trip_group.session_counselors.each do |s_counselor|

@@ -57,7 +57,7 @@
           <td> <%= trip_group_name(trip.trip_group) %></td>
           <td> <%= format_datetime(trip.start) %> </td>
           <td> <%= format_datetime(trip.finish) %> </td>
-          <td> <%= link_to "Details", trip_path(trip) %> </td>
+          <td> <%= link_to "Details", trip_path(trip), class: "btn black-text" %> </td>
         </tr>
       <% end %>
     </tbody>

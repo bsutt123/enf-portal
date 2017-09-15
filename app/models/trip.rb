@@ -3,6 +3,8 @@ class Trip < ApplicationRecord
   belongs_to :session
   belongs_to :session_counselor
 
+  default_scope { order('start ASC') }
+
   has_one :food
 
   has_many :trip_campers

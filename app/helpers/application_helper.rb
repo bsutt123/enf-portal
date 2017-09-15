@@ -33,6 +33,10 @@ module ApplicationHelper
   end
 
   def format_datetime_time(time)
+    time.strftime("%k:%M")
+  end
 
+  def current_session
+    current_session = Session.where("finish >= ?", Date.today).first
   end
 end

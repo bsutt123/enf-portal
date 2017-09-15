@@ -9,6 +9,5 @@ class Cabin < ApplicationRecord
 
   has_many :trips, as: :trip_group
 
-  enum number: [:no_cabin, :lib, :one, :two, :three, :four, :five, :six, :seven,
-                :eight, :nine, :ten, :TT, :out_of_cabin]
+  enum number: [:no_cabin, :lib, :one, :two, :four, :five, :three, :nine, :seven, :eight, :six, :ten, :TT, :out_of_cabin]
 end

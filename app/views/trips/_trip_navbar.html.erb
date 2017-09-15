@@ -2,6 +2,7 @@
   <div class="row">
     <nav class="navbar">
       <%= link_to  "Trips Main Page", trip_sessions_path, class: 'nav-item btn black-text' %>
+      <%= link_to "Current Session Trips", trips_path(:session => current_session, start_date: current_session.start), class: 'btn black-text' %>
     </nav>
   </div>
 </div>

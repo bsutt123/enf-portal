@@ -1,51 +1,109 @@
 <%= render partial:"day_navbar", locals: {day: @day} %>
 
 <div class="container">
-  <h2> Trips Today </h2>
-  <h5> Trip Departures </h5>
+  <h2> Trips Today by Class Name </h2>
+  <h5> Day Trips </h5>
   <table class="table table-striped">
     <thead>
       <tr>
         <th>#</th>
         <th>Description</th>
         <th>Group</th>
-        <th>Departure period</th>
+        <th>Departure Time</th>
+        <th>Arrival Time</th>
         <th>Link to Trip</th>
       </tr>
     </thead>
     <tbody>
-      <% @trip_starts.each_with_index do |trip, index| %>
+      <% @day_trips.each_with_index do |trip, index| %>
         <tr>
           <th scope="row"> <%= index+1 %> </th>
           <td> <%= trip.description %> </td>
           <td> <%= trip_group_name(trip.trip_group) %></td>
-          <td> <%= trip.start_period %> </td>
+          <td> <%= format_datetime_time(trip.start) %> </td>
+          <td> <%= format_datetime_time(trip.finish) %> </td>
           <td> <%= link_to "Details", trip_path(trip) %> </td>
         </tr>
       <% end %>
     </tbody>
   </table>
-    <h5> Trip Arrivals </h5>
+
+  <h5> Trips that start today </h5>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Description</th>
+        <th>Group</th>
+        <th>Departure Time</th>
+        <th>Arrival Time</th>
+        <th>Link to Trip</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @multi_day_trip_starts.each_with_index do |trip, index| %>
+        <tr>
+          <th scope="row"> <%= index+1 %> </th>
+          <td> <%= trip.description %> </td>
+          <td> <%= trip_group_name(trip.trip_group) %></td>
+          <td> <%= format_datetime_time(trip.start) %> </td>
+          <td> <%= format_datetime_time(trip.finish) %> </td>
+          <td> <%= link_to "Details", trip_path(trip) %> </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+    <h5> Trips that end today </h5>
     <table class="table table-striped">
       <thead>
         <tr>
           <th>#</th>
           <th>Description</th>
           <th>Group</th>
-          <th>Arrival period</th>
+          <th>Departure Time</th>
+          <th>Arrival Time</th>
           <th>Link to Trip</th>
         </tr>
       </thead>
       <tbody>
-        <% @trip_starts.each_with_index do |trip, index| %>
+        <% @multi_day_trip_ends.each_with_index do |trip, index| %>
           <tr>
             <th scope="row"> <%= index+1 %> </th>
             <td> <%= trip.description %> </td>
             <td> <%= trip_group_name(trip.trip_group) %></td>
-            <td> <%= trip.end_period %> </td>
+            <td> <%= format_datetime_time(trip.start) %> </td>
+            <td> <%= format_datetime_time(trip.finish) %> </td>
             <td> <%= link_to "Details", trip_path(trip) %> </td>
           </tr>
         <% end %>
       </tbody>
     </table>
+
+      <h5> Trips gone all day </h5>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Description</th>
+            <th>Group</th>
+            <th>Departure Time</th>
+            <th>Arrival Time</th>
+            <th>Link to Trip</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @multi_day_all_day.each_with_index do |trip, index| %>
+            <tr>
+              <th scope="row"> <%= index+1 %> </th>
+              <td> <%= trip.description %> </td>
+              <td> <%= trip_group_name(trip.trip_group) %></td>
+              <td> <%= format_datetime_time(trip.start) %> </td>
+              <td> <%= format_datetime_time(trip.finish) %> </td>
+              <td> <%= link_to "Details", trip_path(trip) %> </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+
 </div>

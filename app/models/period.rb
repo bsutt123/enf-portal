@@ -1,6 +1,5 @@
 class Period < ApplicationRecord
   belongs_to :day
-  enum name: [:flag, :breakfast, :one, :two, :lunch, :rest, :three, :four,
-              :dinner, :twilight, :snack, :evening]
+  enum name: [ :one, :two, :three, :four, :twilight ]
 
 end

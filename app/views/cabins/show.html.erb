@@ -7,32 +7,18 @@
   <div class="row">
     <h3> Cabin Info </h3>
   </div>
-
   <div> Number: <%= @cabin.number %> </div>
   <div> Session: <%= @cabin.session[:identifier] %> </div>
-  <h5> Campers </h5>
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th>#</th>
-        <th>Name</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @cabin.session_campers.each_with_index do |s_camper, index| %>
-        <tr>
-          <th scope="row"> <%= index+1 %> </th>
-          <td> <%= s_camper.camper.name %> </td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
+
   <h5> Counselors </h5>
   <table class="table table-striped">
     <thead>
       <tr>
         <th>#</th>
         <th>Name</th>
+        <th>Lifeguard</th>
+        <th>Driver</th>
+        <th>WFA</th>
       </tr>
     </thead>
     <tbody>
@@ -40,18 +26,58 @@
         <tr>
           <th scope="row"> <%= index+1 %> </th>
           <td> <%= s_counselor.counselor.name %> </td>
+          <td>
+            <% if s_counselor.counselor.lifegaurd %>
+              <i class="fa fa-check" aria-hidden="true"></i>
+            <% end %>
+          </td>
+          <td>
+            <% if s_counselor.counselor.driver %>
+              <i class="fa fa-check" aria-hidden="true"></i>
+            <% end %>
+          </td>
+          <td>
+            <% if s_counselor.counselor.wfa %>
+              <i class="fa fa-check" aria-hidden="true"></i>
+            <% end %>
+          </td>
         </tr>
       <% end %>
     </tbody>
   </table>
+
+  <h5> Campers </h5>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Non Swimmer?</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @cabin.session_campers.each_with_index do |s_camper, index| %>
+        <tr>
+          <th scope="row"> <%= index+1 %> </th>
+          <td> <%= s_camper.camper.name %> </td>
+          <td>
+            <% if s_camper.camper.non_swimmer %>
+              <i class="fa fa-check" aria-hidden="true"></i>
+            <% end %>
+          </td
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
   <h5> Trips </h5>
   <table class="table table-striped">
     <thead>
       <tr>
         <th>#</th>
         <th>Description</th>
-        <th>Departure</th>
-        <th></th>
+        <th>Departure Time</th>
+        <th>Expected Return</th>
         <th>Link to Trip</th>
       </tr>
     </thead>
@@ -60,9 +86,9 @@
         <tr>
           <th scope="row"> <%= index+1 %> </th>
           <td> <%= trip.description %> </td>
-          <td> <%= "#{trip.start_day.date} at period #{trip.start_period}" %></td>
-          <td> <%= "#{trip.end_day.date} at period #{trip.end_period}" %> </td>
-          <td> <%= link_to "Details", trip_path(trip) %> </td>
+          <td> <%= format_datetime(trip.start)%></td>
+          <td> <%= format_datetime(trip.finish) %> </td>
+          <td> <%= link_to "Details", trip_path(trip), class: 'btn btn-success' %> </td>
         </tr>
       <% end %>
     </tbody>

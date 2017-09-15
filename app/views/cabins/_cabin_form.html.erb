@@ -2,7 +2,7 @@
   <%= semantic_form_for [session, cabin] do |f| %>
     <%= f.inputs do %>
       <%= f.input :number, :include_blank => false %>
-      <%= f.input :session, :member_label => :identifier, :include_blank => false  %>
+      <%= f.input :session, :collection => Session.pluck(:identifier, :id), :include_blank => false  %>
       <%= f.input :counselors, :as => :check_boxes, :include_blank => false %>
       <%= f.input :campers, :as => :check_boxes, :include_blank => false %>
     <% end %>
