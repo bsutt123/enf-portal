@@ -53,6 +53,8 @@
         <th>#</th>
         <th>Name</th>
         <th>Non Swimmer?</th>
+        <th>Has a food allergies?</th>
+        <th>Has medication(s) </th>
       </tr>
     </thead>
     <tbody>
@@ -62,6 +64,16 @@
           <td> <%= s_camper.camper.name %> </td>
           <td>
             <% if s_camper.camper.non_swimmer %>
+              <i class="fa fa-check" aria-hidden="true"></i>
+            <% end %>
+          </td>
+          <td>
+            <% if s_camper.camper.has_food_allergies %>
+              <i class="fa fa-check" aria-hidden="true"></i>
+            <% end %>
+          </td>
+          <td>
+            <% if s_camper.camper.has_medication %>
               <i class="fa fa-check" aria-hidden="true"></i>
             <% end %>
           </td>

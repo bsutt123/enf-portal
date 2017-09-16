@@ -6,8 +6,36 @@
       <%= link_to "Edit this Counselor", edit_counselor_path(@counselor), class: 'btn btn-success' %>
       <%= link_to "Delete this Counselor", @counselor, method: :delete, class: 'btn btn-danger', data: {confirm: "Are you sure you want to delete this counselor"} %>
   </div>
-
-    <%= @counselor.name %>
-    <%= @counselor.user.email %>
-    
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Lifeguard</th>
+        <th>Driver</th>
+        <th>WFA</th>
+        <th>Email</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td> <%= @counselor.name %> </td>
+          <td>
+            <% if @counselor.lifegaurd %>
+              <i class="fa fa-check" aria-hidden="true"></i>
+            <% end %>
+          </td>
+          <td>
+            <% if @counselor.driver %>
+              <i class="fa fa-check" aria-hidden="true"></i>
+            <% end %>
+          </td>
+          <td>
+            <% if @counselor.wfa %>
+              <i class="fa fa-check" aria-hidden="true"></i>
+            <% end %>
+          </td>
+          <td> <%= @counselor.user.email %> </td>
+        </tr>
+    </tbody>
+  </table>
 </div>

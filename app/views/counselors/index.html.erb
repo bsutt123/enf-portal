@@ -1,8 +1,43 @@
 <%= render "counselor_navbar" %>
 <div class="container">
-  <% @counselors.each do |counselor| %>
-    <div class="row">
-      <%= link_to counselor.name, counselor_path(counselor), class: 'btn black-text' %>
-    </div>
-  <% end %>
+
+  <h5> Counselors </h5>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Lifeguard</th>
+        <th>Driver</th>
+        <th>WFA</th>
+        <th>Link to</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @counselors.each_with_index do |counselor, index| %>
+        <tr>
+          <th scope="row"> <%= index+1 %> </th>
+          <td> <%= counselor.name %> </td>
+          <td>
+            <% if counselor.lifegaurd %>
+              <i class="fa fa-check" aria-hidden="true"></i>
+            <% end %>
+          </td>
+          <td>
+            <% if counselor.driver %>
+              <i class="fa fa-check" aria-hidden="true"></i>
+            <% end %>
+          </td>
+          <td>
+            <% if counselor.wfa %>
+              <i class="fa fa-check" aria-hidden="true"></i>
+            <% end %>
+          </td>
+          <td> <%= link_to "Details", counselor_path(counselor), class: 'btn black-text' %> </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+
 </div>

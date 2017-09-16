@@ -1,10 +1,40 @@
 <%= render "camper_navbar" %>
 
 <div class="container">
-  <% @campers.each do |camper| %>
-    <div class="row">
-      <%= link_to camper.name, camper_path(camper), class: 'btn black-text' %>
-    </div>
-  <% end %>
+  <h5> Campers </h5>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Non Swimmer?</th>
+        <th>Has a food allergies?</th>
+        <th>Has medication(s) </th>
+        <th>Link to Camper</th>
+      </tr>
+    </thead>
+    <% @campers.each_with_index do |camper, index| %>
+    <tbody>
+        <tr>
+          <td> <%= camper.name %> </td>
+          <td>
+            <% if camper.non_swimmer %>
+              <i class="fa fa-check" aria-hidden="true"></i>
+            <% end %>
+          </td>
+          <td>
+            <% if camper.has_food_allergies %>
+              <i class="fa fa-check" aria-hidden="true"></i>
+            <% end %>
+          </td>
+          <td>
+            <% if camper.has_medication %>
+              <i class="fa fa-check" aria-hidden="true"></i>
+            <% end %>
+          </td>
+          <td> <%= link_to "Details", camper_path(camper), class: 'btn black-text' %> </td>
+        </tr>
+    </tbody>
+    <% end %>
+  </table>
 
 </div>

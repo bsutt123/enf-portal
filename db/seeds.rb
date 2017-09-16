@@ -8,24 +8,24 @@
 require 'date'
 require 'faker'
 
-Counselor.create!(
-  name: "Brady"
+Counselor.where(name: "Brady").first_or_create!(
+  driver: true,
+  lifeguard: true,
+  wfa: true
 )
 User.where(email: "bsutt123@gmail.com").first_or_create!(
-  email: "bsutt123@gmail.com",
   password: "password",
   password_confirmation: "password",
   role: "admin",
   counselor_id: Counselor.find_by(name: "Brady")[:id]
 )
-Counselor.create!(
+Counselor.where(name: "Standard").first_or_create!(
   name: "Standard",
   lifegaurd: Faker::Boolean.boolean,
   wfa: Faker::Boolean.boolean,
-  driver: true
+  driver: Faker::Boolean.boolean,
 )
-User.create!(
-  email: "standard@example.com",
+User.where(email: "standard@example.com").first_or_create!(
   password: "password",
   password_confirmation: "password",
   role: "standard",
@@ -35,7 +35,9 @@ Faker::UniqueGenerator.clear
 50.times do
   Camper.create!(
     name:Faker::Name.unique.name,
-    non_swimmer:Faker::Boolean.boolean(0.05)
+    non_swimmer:Faker::Boolean.boolean(0.5),
+    has_food_allergies:Faker::Boolean.boolean,
+    has_medication:Faker::Boolean.boolean
   )
 end
 
@@ -44,7 +46,7 @@ end
     name:Faker::GameOfThrones.character,
     lifegaurd: Faker::Boolean.boolean,
     wfa: Faker::Boolean.boolean,
-    driver: true
+    driver: Faker::Boolean.boolean
   )
   User.create!(
     email:Faker::Internet.unique.email,

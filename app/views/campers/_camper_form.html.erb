@@ -2,6 +2,9 @@
   <%= semantic_form_for camper do |f| %>
     <%= f.inputs do %>
       <%= f.input :name %>
+      <%= f.input :non_swimmer %>
+      <%= f.input :has_food_allergies %>
+      <%= f.input :has_medication %>
     <% end %>
     <%= f.actions do %>
       <%= f.action :submit %>

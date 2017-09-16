@@ -27,6 +27,8 @@ ActiveRecord::Schema.define(version: 20170914205104) do
   create_table "campers", force: :cascade do |t|
     t.string "name"
     t.boolean "non_swimmer"
+    t.boolean "has_food_allergies"
+    t.boolean "has_medication"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -122,6 +124,7 @@ ActiveRecord::Schema.define(version: 20170914205104) do
     t.bigint "camper_id"
     t.bigint "cabin_id"
     t.bigint "session_id"
+    t.integer "table_number"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["cabin_id"], name: "index_session_campers_on_cabin_id"
@@ -133,6 +136,7 @@ ActiveRecord::Schema.define(version: 20170914205104) do
     t.bigint "session_id"
     t.bigint "cabin_id"
     t.bigint "counselor_id"
+    t.integer "table_number"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["cabin_id"], name: "index_session_counselors_on_cabin_id"
