@@ -2,7 +2,7 @@
   <%= semantic_form_for [session, enf_class] do |f| %>
     <%= f.inputs do %>
       <%= f.input :name %>
-      <%= f.input :session_campers, :as => :check_boxes, :member_label => session_camper_proc  %>
+      <%= f.input :period, :include_blank => false %>
       <%= f.input :session_counselors, :as => :check_boxes, :member_label => session_counselor_proc %>
     <% end %>
     <%= f.actions do %>

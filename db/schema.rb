@@ -42,7 +42,6 @@ ActiveRecord::Schema.define(version: 20170914205104) do
 
   create_table "days", force: :cascade do |t|
     t.date "date", null: false
-    t.integer "style", default: 0
     t.bigint "session_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -52,23 +51,57 @@ ActiveRecord::Schema.define(version: 20170914205104) do
   create_table "enf_classes", force: :cascade do |t|
     t.string "name", null: false
     t.bigint "session_id"
+    t.integer "period"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["session_id"], name: "index_enf_classes_on_session_id"
   end
 
   create_table "foods", force: :cascade do |t|
-    t.integer "apples"
-    t.integer "oranges"
-    t.integer "bananas"
-    t.integer "avocados"
-    t.integer "bags_of_chips"
-    t.integer "pitas"
-    t.integer "bread_slices"
-    t.float "lbs_turkey"
-    t.float "lbs_ham"
-    t.float "lbs_peanut_butter"
-    t.float "lbs_jelly"
+    t.integer "loafs_of_bread", default: 0
+    t.integer "pitas", default: 0
+    t.integer "bagels", default: 0
+    t.integer "tortillas", default: 0
+    t.float "lbs_of_pasta", default: 0.0
+    t.float "lbs_of_couscous", default: 0.0
+    t.float "lbs_of_chips", default: 0.0
+    t.float "lbs_of_sugar", default: 0.0
+    t.float "lbs_of_flour", default: 0.0
+    t.integer "onions", default: 0
+    t.integer "garlic_heads", default: 0
+    t.integer "peppers", default: 0
+    t.integer "tomatoes", default: 0
+    t.integer "carrots", default: 0
+    t.integer "potatoes", default: 0
+    t.integer "broccoli_heads", default: 0
+    t.integer "avocados", default: 0
+    t.text "other_vegetables"
+    t.integer "apples", default: 0
+    t.integer "oranges", default: 0
+    t.integer "bananas", default: 0
+    t.integer "peaches", default: 0
+    t.float "lbs_jelly", default: 0.0
+    t.integer "bags_of_crackers", default: 0
+    t.float "lbs_gorp", default: 0.0
+    t.text "other_fruits_or_snacks"
+    t.float "lbs_hummus", default: 0.0
+    t.float "lbs_veg_chili", default: 0.0
+    t.float "lbs_deh_beans", default: 0.0
+    t.float "lbs_peanut_butter", default: 0.0
+    t.float "lbs_turkey", default: 0.0
+    t.float "lbs_ham", default: 0.0
+    t.float "lbs_cheese", default: 0.0
+    t.float "lbs_falafel", default: 0.0
+    t.float "lbs_tuna", default: 0.0
+    t.text "other_proteins"
+    t.float "lbs_grits", default: 0.0
+    t.float "lbs_granola", default: 0.0
+    t.float "lbs_oatmeal", default: 0.0
+    t.float "lbs_grape_nuts", default: 0.0
+    t.float "lbs_cream_wheat", default: 0.0
+    t.float "lbs_hash_browns", default: 0.0
+    t.text "other_breakfast_items"
+    t.text "special_food_requests"
     t.bigint "trip_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -78,19 +111,11 @@ ActiveRecord::Schema.define(version: 20170914205104) do
   create_table "instructors", force: :cascade do |t|
     t.bigint "session_counselor_id"
     t.bigint "enf_class_id"
+    t.integer "days_attend", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["enf_class_id"], name: "index_instructors_on_enf_class_id"
     t.index ["session_counselor_id"], name: "index_instructors_on_session_counselor_id"
-  end
-
-  create_table "periods", force: :cascade do |t|
-    t.integer "order"
-    t.integer "name"
-    t.bigint "day_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["day_id"], name: "index_periods_on_day_id"
   end
 
   create_table "session_campers", force: :cascade do |t|
@@ -136,6 +161,7 @@ ActiveRecord::Schema.define(version: 20170914205104) do
   create_table "students", force: :cascade do |t|
     t.bigint "session_camper_id"
     t.bigint "enf_class_id"
+    t.integer "days_attend", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["enf_class_id"], name: "index_students_on_enf_class_id"

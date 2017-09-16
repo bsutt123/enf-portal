@@ -18,11 +18,9 @@ class EnfClassesController < ApplicationController
     @session = Session.find(params[:session_id])
     @enf_class = @session.enf_classes.create(enf_class_params)
 
-    session_camper_ids = params[:enf_class][:session_camper_ids]
     session_counselor_ids = params[:enf_class][:session_counselor_ids]
 
     create_instructors(session_counselor_ids, @enf_class)
-    create_students(session_camper_ids, @enf_class)
     if @enf_class.save
       flash[:notice] = "Your class was successfully saved"
       redirect_to [@session, @enf_class]
@@ -48,16 +46,13 @@ class EnfClassesController < ApplicationController
   def update
     @session = Session.find(params[:session_id])
     @enf_class = @session.enf_classes.find(params[:id])
-    session_camper_ids = params[:enf_class][:session_camper_ids]
     session_counselor_ids = params[:enf_class][:session_counselor_ids]
 
     @enf_class.assign_attributes(enf_class_params)
 
-    detonate_students(@enf_class)
     detonate_instructors(@enf_class)
 
     create_instructors(session_counselor_ids, @enf_class)
-    create_students(session_camper_ids, @enf_class)
     if @enf_class.save
       flash[:notice] = "Your class was successfully saved"
     else
@@ -70,7 +65,7 @@ class EnfClassesController < ApplicationController
   private
 
   def enf_class_params
-    params.require(:enf_class).permit(:name)
+    params.require(:enf_class).permit(:name, :period)
   end
 
   def create_students(array, enf_class)

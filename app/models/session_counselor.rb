@@ -1,4 +1,6 @@
 class SessionCounselor < ApplicationRecord
+  default_scope {order("cabin_id ASC")}
+
   belongs_to :session
   belongs_to :cabin
   belongs_to :counselor

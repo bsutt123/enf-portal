@@ -36,7 +36,6 @@ class CabinsController < ApplicationController
 
     authorize @cabin
     @cabin.assign_attributes(cabin_params)
-
     camper_ids = params[:cabin][:camper_ids]
     counselor_ids = params[:cabin][:counselor_ids]
 

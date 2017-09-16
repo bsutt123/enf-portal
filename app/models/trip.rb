@@ -20,6 +20,27 @@ class Trip < ApplicationRecord
   belongs_to :end_day, :class_name => "Day", :foreign_key => 'end_day_id'
 
   def self.overlapping_approved_trips(trip)
-    where("start BETWEEN :trip_start AND :trip_end OR finish BETWEEN :trip_start AND :trip_end OR start <= :trip_start AND finish >= :trip_end", {trip_start: self.start, trip_end: self.finish}).where.not(self[:id]).where(approved: true)
+    where("start BETWEEN :trip_start AND :trip_end OR finish BETWEEN :trip_start AND :trip_end OR start <= :trip_start AND finish >= :trip_end", {trip_start: trip.start, trip_end: trip.finish})
+  end
+
+
+  def self.day_trips_off_campus(date)
+    time_line = (date..(date+1))
+    where(start: time_line, approved: true, day_trip: true)
+  end
+
+  def self.multi_day_starts(date)
+    time_line = (date..(date+1))
+    where(approved:true).where(start: time_line, day_trip:false)
+  end
+
+  def self.multi_day_ends(date)
+    time_line = (date..(date+1))
+    where(approved: true).where(finish: time_line, day_trip:false)
+  end
+
+  def self.multi_day_all_day(date)
+    date_hash = {start_date: date, finish_date: (date+1) }
+    where(approved: true).where("start < :start_date AND finish > :finish_date",date_hash)
   end
 end

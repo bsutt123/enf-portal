@@ -17,7 +17,7 @@ class TripsController < ApplicationController
   def edit
     @trip = Trip.find(params[:id])
     @session = @trip.session
-    overlapping_trips = overlapping_approved_trips(@trip)
+    overlapping_trips = Trip.overlapping_approved_trips(@trip)
     s_van_ids = @session.session_van_ids
     used_vans = []
     overlapping_trips.each do |approved_trip|

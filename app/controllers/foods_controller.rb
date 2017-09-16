@@ -10,8 +10,23 @@ class FoodsController < ApplicationController
   end
 
   def destroy
+    @trip = Trip.find(params[:trip_id])
+    @food = @trip.food
 
+    if @food.destroy
+      flash[:notice] = "You successfully deleted the food form"
+    else
+      flash[:alert] = "There was a problem deleting this food form"
+    end
+    redirect_to @trip
   end
+
+  def show
+
+    @trip = Trip.find(params[:trip_id])
+    @food = Food.find(params[:id])
+  end
+
 
   def create
     @trip = Trip.find(params[:trip_id])
@@ -28,7 +43,16 @@ class FoodsController < ApplicationController
   end
 
   def update
+    @trip = Trip.find(params[:trip_id])
+    @food = Trip.food
+    @food.assign_attributes(trip_food_params)
 
+    if @food.save
+      flash[:notice] = 'Your food form was succesfully updated'
+    else
+      flash[:alert] = "There was a problem saving your food form"
+    end
+    redirect_to @trip
   end
 
   private

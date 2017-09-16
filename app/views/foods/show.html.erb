@@ -1,0 +1,33 @@
+<%= render partial:"trips/trip_navbar" %>
+
+<div class="container">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th> Item </th>
+        <th> Packed ? </th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @trip.food.attributes.each_pair do |key, value| %>
+          <% if key == "trip_id" %>
+          <% elsif key == "created_at" %>
+          <% elsif key == "updated_at" %>
+          <% elsif value.is_a?(String) %>
+            <% if value != "" %>
+              <tr>
+                <td> <%= "Special Request for #{key}: #{value}" %> </td>
+                <td> </td>
+              </tr>
+            <% end %>
+          <% elsif value > 0 %>
+            <tr>
+              <td><%= "#{value} #{key}" %> </td>
+              <td> </td>
+            </tr>
+          <% end %>
+      <% end %>
+    </tbody>
+  </table>
+
+</div>

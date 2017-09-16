@@ -1,17 +1,60 @@
 <div class="container">
   <%= semantic_form_for [trip, food] do |f| %>
-    <%= f.inputs do %>
+    <%= f.inputs :name => "Dry Goods" do %>
+      <%= f.input :loafs_of_bread %>
+      <%= f.input :pitas %>
+      <%= f.input :bagels %>
+      <%= f.input :tortillas %>
+      <%= f.input :lbs_of_pasta%>
+      <%= f.input :lbs_of_couscous%>
+      <%= f.input :lbs_of_chips %>
+      <%= f.input :lbs_of_sugar %>
+      <%= f.input :lbs_of_flour%>
+    <% end %>
+    <%= f.inputs :name => "Vegetables" do %>
+      <%= f.input :onions %>
+      <%= f.input :garlic_heads %>
+      <%= f.input :peppers %>
+      <%= f.input :tomatoes %>
+      <%= f.input :carrots %>
+      <%= f.input :potatoes%>
+      <%= f.input :broccoli_heads %>
+      <%= f.input :avocados %>
+      <%= f.input :other_vegetables %>
+    <% end %>
+    <%= f.inputs :name => "Fruits and Snacks" do %>
       <%= f.input :apples %>
       <%= f.input :oranges %>
       <%= f.input :bananas %>
-      <%= f.input :avocados %>
-      <%= f.input :pitas %>
-      <%= f.input :bread_slices %>
-      <%= f.input :bags_of_chips %>
+      <%= f.input :peaches %>
+      <%= f.input :lbs_jelly %>
+      <%= f.input :bags_of_crackers %>
+      <%= f.input :lbs_gorp %>
+      <%= f.input :other_fruits_or_snacks %>
+    <% end %>
+    <%= f.inputs :name => "Proteins" do %>
+      <%= f.input :lbs_hummus %>
+      <%= f.input :lbs_veg_chili %>
+      <%= f.input :lbs_deh_beans %>
+      <%= f.input :lbs_peanut_butter %>
       <%= f.input :lbs_turkey %>
       <%= f.input :lbs_ham %>
-      <%= f.input :lbs_peanut_butter %>
-      <%= f.input :lbs_jelly %>
+      <%= f.input :lbs_cheese %>
+      <%= f.input :lbs_falafel %>
+      <%= f.input :lbs_tuna %>
+      <%= f.input :other_proteins %>
+    <% end %>
+    <%= f.inputs :name => "Breakfasts" do %>
+      <%= f.input :lbs_grits %>
+      <%= f.input :lbs_granola %>
+      <%= f.input :lbs_oatmeal %>
+      <%= f.input :lbs_grape_nuts %>
+      <%= f.input :lbs_cream_wheat %>
+      <%= f.input :lbs_hash_browns %>
+      <%= f.input :other_breakfast_items %>
+    <% end %>
+    <%= f.inputs name: "Special Requests" do %>
+      <%= f.input :special_food_requests %>
     <% end %>
     <%= f.actions do %>
       <%= f.action :submit %>

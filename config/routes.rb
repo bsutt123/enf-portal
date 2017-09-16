@@ -17,7 +17,7 @@ Rails.application.routes.draw do
   end
 
   resources :trips do
-    resources :foods, except: [:index, :show]
+    resources :foods, except: [:index]
   end
   resources :campers
   resources :days, except: [:index]

@@ -57,6 +57,7 @@ end
 (1..10).each do |number|
   Van.create!(number: number, capacity: 15)
 end
+periods = ["one", "two", "three", "four", "twilight"]
 
 
 dates = [
@@ -118,19 +119,26 @@ sessions.each do |session|
   10.times do
     enf_class = EnfClass.create!(
       session: session,
-      name: Faker::Seinfeld.quote
+      name: Faker::Seinfeld.quote,
+      period: periods.sample
     )
 
     rand(8..12).times do
-      Student.create!(enf_class: enf_class, session_camper: session_campers.sample)
+      Student.create!(
+        enf_class: enf_class,
+        session_camper: session_campers.sample
+      )
     end
 
     rand(1..3).times do
-      Instructor.create!(enf_class: enf_class, session_counselor: session_counselors.sample)
+      Instructor.create!(
+        enf_class: enf_class,
+        session_counselor: session_counselors.sample
+      )
     end
   end
 
-  enf_classes = EnfClass.all
+  enf_classes = session.enf_classes
   20.times do
     day = session.days.sample
     date = day.date
