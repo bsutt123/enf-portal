@@ -51,6 +51,8 @@
         <th>#</th>
         <th>Name</th>
         <th>Non Swimmer?</th>
+        <th>Food Allergies?</th>
+        <th>Medications?</th>
       </tr>
     </thead>
     <tbody>
@@ -62,7 +64,17 @@
             <% if s_camper.camper.non_swimmer %>
               <i class="fa fa-check" aria-hidden="true"></i>
             <% end %>
-          </td
+          </td>
+          <td>
+            <% if s_camper.camper.has_food_allergies %>
+              <i class="fa fa-check" aria-hidden="true"></i>
+            <% end %>
+          </td>
+          <td>
+            <% if s_camper.camper.has_medication %>
+              <i class="fa fa-check" aria-hidden="true"></i>
+            <% end %>
+          </td>
         </tr>
       <% end %>
     </tbody>

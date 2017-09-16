@@ -9,6 +9,9 @@ class SessionCamper < ApplicationRecord
   has_many :trip_campers
   has_many :trips, :through => :trip_campers
 
-  has_many :students
+  has_many :students, inverse_of: :session_camper
   has_many :enf_classes, :through => :students
+
+  accepts_nested_attributes_for :students
+
 end

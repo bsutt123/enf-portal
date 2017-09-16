@@ -21,6 +21,7 @@ Rails.application.routes.draw do
   end
   resources :campers
   resources :days, except: [:index]
+  resources :session_campers, except: [:index, :new]
 
   get 'trip_sessions', to: "trips#enf_session"
 

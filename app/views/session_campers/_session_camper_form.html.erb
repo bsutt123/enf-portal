@@ -1,0 +1,39 @@
+<div class="container">
+  <%= semantic_form_for @session_camper do |f| %>
+    <%= f.inputs do %>
+    <%= f.input :table_number %>
+      <h3> Students </h3>
+      <div id="tasks">
+        <%= f.semantic_fields_for :students, @session_camper.students do |student| %>
+          <% if EnfClass.find(student.object[:enf_class_id]).one? %>
+            <%= render 'period_one_fields', f: student %>
+          <% elsif EnfClass.find(student.object[:enf_class_id]).two? %>
+            <%= render 'period_two_fields', f: student %>
+          <% elsif EnfClass.find(student.object[:enf_class_id]).three? %>
+            <%= render 'period_three_fields', f: student %>
+          <% elsif EnfClass.find(student.object[:enf_class_id]).four? %>
+            <%= render 'period_four_fields', f: student %>
+          <% elsif alternating_period?(EnfClass.find(student.object[:enf_class_id])) %>
+            <%= render 'alternating_period_fields', f: student %>
+          <% else %>
+            <%= render 'period_one_fields', f: student %>
+            <%= render 'period_two_fields', f: student %>
+            <%= render 'period_three_fields', f: student %>
+            <%= render 'period_four_fields', f: student %>
+            <%= render 'alternating_period_fields', f: student %>
+          <% end %>
+        <% end %>
+        <div class="links">
+          <%= link_to_add_association 'Add Another Period 1', f, :students, partial: "period_one_fields", class: 'btn black-text'%>
+          <%= link_to_add_association 'Add Another Period 2', f, :students, partial: "period_two_fields", class: 'btn black-text' %>
+          <%= link_to_add_association 'Add Another Period 3', f, :students, partial: "period_three_fields", class: 'btn black-text' %>
+          <%= link_to_add_association 'Add Another Period 4', f, :students, partial: "period_four_fields", class: 'btn black-text' %>
+          <%= link_to_add_association 'Add Another Alernating Period', f, :students, partial: "alternating_period_fields", class: 'btn black-text' %>
+        </div>
+      </div>
+    <% end %>
+    <%= f.actions do %>
+      <%= f.action :submit %>
+    <% end %>
+  <% end %>
+</div>

@@ -10,7 +10,7 @@ require 'faker'
 
 Counselor.where(name: "Brady").first_or_create!(
   driver: true,
-  lifeguard: true,
+  lifegaurd: true,
   wfa: true
 )
 User.where(email: "bsutt123@gmail.com").first_or_create!(
@@ -56,10 +56,42 @@ end
   )
 end
 
+
+
 (1..10).each do |number|
   Van.create!(number: number, capacity: 15)
 end
-periods = ["one", "two", "three", "four", "twilight"]
+all_periods = ["one", 'two', 'three', 'four', 'one_and_two_mwf', 'one_and_two_tts', 'three_and_four_mwf', 'three_and_four_tts', 'twilight']
+regular_periods = ['one','two','three','four']
+
+classes = [
+  ["Adv Canoe", "one"],
+  ["Int Canoe", "two"],
+  ["Beg Canoe", "three"],
+  ["Lake Canoe", "four"],
+  ["Adv Rocks", "one"],
+  ["Int Rocks", "two"],
+  ["Beg Rocks", "three"],
+  ["Young Rocks", "four"],
+  ["Ceramics", "one"],
+  ["Archery", "two"],
+  ["Young Campcraft", "three"],
+  ["X-Craft", "four"],
+  ["Adv Swim", "one"],
+  ["Int Swim", "two"],
+  ["Beg Swim", "three"],
+  ["Young Swim", "four"],
+  ["Walks and Waterfalls A", "one_and_two_mwf"],
+  ["Walks and Waterfalls B", "one_and_two_tts"],
+  ["Walks and Waterfalls C", "three_and_four_mwf"],
+  ["Walks and Waterfalls D", "three_and_four_tts"],
+  ["Athletics Twilight", "twilight"],
+  ["Arts and Crafts Twilight", "twilight"],
+  ["Lake Twilight", "twilight"],
+  ["Random Fun Twilight", "twilight"],
+  ["Chill Twilight", "twilight"]
+]
+
 
 
 dates = [
@@ -118,29 +150,33 @@ sessions.each do |session|
     )
   end
   session_counselors = session.session_counselors
-  10.times do
+  classes.each do |class_info|
     enf_class = EnfClass.create!(
+      name: class_info[0],
       session: session,
-      name: Faker::Seinfeld.quote,
-      period: periods.sample
+      period: class_info[1]
     )
 
-    rand(8..12).times do
-      Student.create!(
-        enf_class: enf_class,
-        session_camper: session_campers.sample
-      )
-    end
+    # class_campers = session_campers.sample(rand(8..12))
+    # class_campers.each do |camper|
+    #   Student.create!(
+    #     enf_class: enf_class,
+    #     session_camper: camper,
+    #     days_attend: "every"
+    #   )
+    # end
 
-    rand(1..3).times do
+    class_counselors = session_counselors.sample(rand(2..3))
+    class_counselors.each do |counselor|
       Instructor.create!(
         enf_class: enf_class,
-        session_counselor: session_counselors.sample
+        session_counselor: counselor,
+        days_attend: "every"
       )
     end
   end
 
-  enf_classes = session.enf_classes
+  enf_classes = session.enf_classes.where.not(period: "twilight")
   20.times do
     day = session.days.sample
     date = day.date

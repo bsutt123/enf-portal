@@ -1,0 +1,7 @@
+<div class="nested-fields">
+  <%= f.inputs do %>
+  <%= f.input :enf_class, :label => "Period 3", :as => :radio, collection: @enf_classes.where(period: "three") %>
+  <%= f.input :days_attend, :include_blank => false %>
+  <%= link_to_remove_association "remove task", f %>
+  <% end %>
+</div>

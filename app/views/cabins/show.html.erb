@@ -55,6 +55,7 @@
         <th>Non Swimmer?</th>
         <th>Has a food allergies?</th>
         <th>Has medication(s) </th>
+        <th>Details</th>
       </tr>
     </thead>
     <tbody>
@@ -77,6 +78,7 @@
               <i class="fa fa-check" aria-hidden="true"></i>
             <% end %>
           </td>
+          <td> <%= link_to "Class Details", session_camper_path(s_camper), class: 'btn black-text' %> </td>
         </tr>
       <% end %>
     </tbody>

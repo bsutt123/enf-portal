@@ -40,7 +40,7 @@ Formtastic::FormBuilder.include_blank_for_select_by_default = true
 
 # Set the method to call on label text to transform or format it for human-friendly
 # reading when formtastic is used without object. Defaults to :humanize.
-# Formtastic::FormBuilder.label_str_method = :humanize
+Formtastic::FormBuilder.label_str_method = :humanize
 
 # Set the array of methods to try calling on parent objects in :select and :radio inputs
 # for the text inside each @<option>@ tag or alongside each radio @<input>@. The first method

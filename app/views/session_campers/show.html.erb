@@ -1,0 +1,28 @@
+<%= render partial:'sessions/session_navbar' %>
+
+<div class="container">
+  <div class="row">
+    <%= link_to "Add Classes", edit_session_camper_path(@session_camper), class: 'btn btn-success' %>
+  </div>
+  <h4> Class List </h4>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Name</th>
+          <th>Period</th>
+          <th>Days Attend</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @session_camper.students.each_with_index do |student, index| %>
+          <tr>
+            <th> <%= index+1 %></th>
+            <td> <%= student.enf_class.name %> </td>
+            <td> <%= format_period(student.enf_class.period) %> </td>
+            <td> <%= student.days_attend %> </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+</div>
