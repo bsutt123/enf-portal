@@ -1,10 +1,10 @@
 
 <div class="nested-fields">
   <%= f.inputs do %>
-  <%= f.input :enf_class, :label => "Period 1+2 MWF", :as => :radio, collection: @enf_classes.where(period: "one_and_two_mwf"), :input_html => {:class => "small-text"} %>
-  <%= f.input :enf_class, :label => "Period 1+2 TTS", :as => :radio, collection: @enf_classes.where(period: "one_and_two_tts") %>
-  <%= f.input :enf_class, :label => "Period 3+4 MWF", :as => :radio, collection: @enf_classes.where(period: "three_and_four_mwf") %>
-  <%= f.input :enf_class, :label => "Period 3+4 TTS", :as => :radio, collection: @enf_classes.where(period: "three_and_four_tts") %>
+  <%= f.input :enf_class, :label => "Period 1+2 MWF", :as => :radio, collection: @enf_classes.where(period: 4), :input_html => {:class => "small-text"} %>
+  <%= f.input :enf_class, :label => "Period 1+2 TTS", :as => :radio, collection: @enf_classes.where(period: 5) %>
+  <%= f.input :enf_class, :label => "Period 3+4 MWF", :as => :radio, collection: @enf_classes.where(period: 6) %>
+  <%= f.input :enf_class, :label => "Period 3+4 TTS", :as => :radio, collection: @enf_classes.where(period: 7) %>
   <%= link_to_remove_association "remove task", f %>
   <% end %>
 </div>

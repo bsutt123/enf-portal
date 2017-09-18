@@ -17,11 +17,6 @@
           <% elsif alternating_period?(EnfClass.find(instructor.object[:enf_class_id])) %>
             <%= render 'alternating_period_fields', f: instructor %>
           <% else %>
-            <%= render 'period_one_fields', f: instructor %>
-            <%= render 'period_two_fields', f: instructor %>
-            <%= render 'period_three_fields', f: instructor %>
-            <%= render 'period_four_fields', f: instructor %>
-            <%= render 'alternating_period_fields', f: instructor %>
           <% end %>
         <% end %>
         <div class="links">
