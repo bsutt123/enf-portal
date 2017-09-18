@@ -12,6 +12,11 @@ class TripsController < ApplicationController
 
   def show
     @trip = Trip.find(params[:id])
+    @van_capacity = Van.where(id: @trip.session_vans.pluck(:van_id)).pluck(:capacity).reduce(:+)
+    @total_people = @trip.session_campers.count+@trip.session_counselors.count
+    @num_drivers = Counselor.where(id: @trip.session_counselors.pluck(:counselor_id)).where(driver: true).count
+    @num_lifeguards = Counselor.where(id: @trip.session_counselors.pluck(:counselor_id)).where(lifeguard: true).count
+    @num_wfas = Counselor.where(id: @trip.session_counselors.pluck(:counselor_id)).where(wfa: true).count
   end
 
   def edit

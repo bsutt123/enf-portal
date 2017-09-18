@@ -2,6 +2,7 @@
   <%= semantic_form_for @session_camper do |f| %>
     <%= f.inputs do %>
     <%= f.input :table_number %>
+    <%= f.input :cabin_id, :as => :radio, :collection => @session_camper.session.cabins.pluck(:number, :id) %>
       <h3> Students </h3>
       <div id="tasks">
         <%= f.semantic_fields_for :students, @session_camper.students do |student| %>

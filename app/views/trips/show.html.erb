@@ -3,15 +3,18 @@
 <div class="container">
   <div class="row justify-content-center">
     <% if current_user.admin? || current_user.program_assistant? %>
-      <%= link_to "Trip Approval Page", edit_trip_path(@trip, all_campers: false), class: 'btn btn-success' %>
-    <% elsif current_user == @trip.counselor.user %>
-      <%= link_to "Edit Trip Page", edit_trip_path(@trip, all_campers: false), class: 'btn btn-success' %>
+      <%= link_to "Trip Approval Page", edit_trip_path(@trip, all_campers: false), class: 'btn btn-success margin-left-right' %>
+    <% elsif current_user == @trip.session_counselor.counselor.user %>
+      <%= link_to "Edit Trip Page", edit_trip_path(@trip, all_campers: false), class: 'btn btn-success margin-left-right' %>
+    <% end %>
+    <% if delete_trip_access(@trip) %>
+      <%= link_to "Delete Trip", @trip, method: :delete, class: 'btn btn-danger margin-left-right', data: {confirm: "Are you sure you want to delete this trip? It will delete all the data that is associated with this trip and you won't be able to get it back."} %>
     <% end %>
     <% if @trip.food %>
-      <%= link_to "Edit Food", edit_trip_food_path(@trip, @trip.food), class: "btn btn-success" %>
-      <%= link_to "See Trip Food", trip_food_path(@trip, @trip.food), class: 'btn btn-success' %>
+      <%= link_to "Edit Food", edit_trip_food_path(@trip, @trip.food), class: "btn btn-success margin-left-right" %>
+      <%= link_to "See Trip Food", trip_food_path(@trip, @trip.food), class: 'btn btn-success margin-left-right' %>
     <% else %>
-      <%= link_to "Add Food", new_trip_food_path(@trip), class: "btn btn-success" %>
+      <%= link_to "Add Food", new_trip_food_path(@trip), class: "btn btn-success margin-left-right" %>
     <% end %>
   </div>
   <h5> Trip Requirements </h5>
@@ -22,7 +25,7 @@
         <th>Needs Food</th>
         <th>Needs Gear</th>
         <th>Needs a Van(s)</th>
-        <th>Needs a Lifegaurd</th>
+        <th>Needs a lifeguard</th>
         <th>Needs a WFA</th>
         <th>Approved</th>
       </tr>
@@ -84,6 +87,50 @@
     </tbody>
   </table>
 
+  <h5> Requirements met </h5>
+  <h7> this whole table should be checks. If you don't need something it checks it off automatically </h7>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th> Has Food </th>
+          <th> Has Vans </th>
+          <th> Has Drivers </th>
+          <th> Has lifeguards </th>
+          <th> Has WFAs <th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <% if !@trip.requires_food || @trip.food %>
+              <i class="fa fa-check" aria-hidden="true"></i>
+            <% end %>
+          </td>
+          <td>
+            <% if !@trip.requires_van || (@van_capacity && @van_capacity >= @total_people ) %>
+              <i class="fa fa-check" aria-hidden="true"></i>
+            <% end %>
+          </td>
+          <td>
+            <% if !@trip.requires_van || (@num_drivers && @num_drivers >= @trip.session_vans.count )%>
+              <i class="fa fa-check" aria-hidden="true"></i>
+            <% end %>
+          </td>
+          <td>
+            <% if !@trip.requires_lifeguard || (@num_lifeguards && @num_lifeguards > 0 )%>
+              <i class="fa fa-check" aria-hidden="true"></i>
+            <% end %>
+          </td>
+          <td>
+            <% if !@trip.requires_wfa || (@num_wfas && @num_wfas > 0) %>
+              <i class="fa fa-check" aria-hidden="true"></i>
+            <% end %>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+
   <h5> Counselors </h5>
   <table class="table table-striped">
     <thead>
@@ -91,7 +138,7 @@
         <th>#</th>
         <th>Name</th>
         <th>Driver</th>
-        <th>Lifegaurd</th>
+        <th>lifeguard</th>
         <th>WFA</th>
       </tr>
     </thead>
@@ -99,9 +146,9 @@
       <% @trip.session_counselors.each_with_index do |s_counselor, index| %>
         <tr>
           <th scope="row"> <%= index+1 %> </th>
-          <td> <%= s_counselor.counselor.name %> </td>
+          <td> <%= link_to s_counselor.counselor.name, session_counselor_path(s_counselor), class: 'btn black-text' %> </td>
           <td>
-            <% if s_counselor.counselor.lifegaurd %>
+            <% if s_counselor.counselor.lifeguard %>
               <i class="fa fa-check" aria-hidden="true"></i>
             <% end %>
           </td>
@@ -125,6 +172,9 @@
       <tr>
         <th>#</th>
         <th>Name</th>
+        <th>Days Attend Class</th>
+        <th>Start Day</th>
+        <th>End Day</th>
         <th>Non Swimmer?</th>
         <th>Food Allergies?</th>
         <th>Has Medications? </th>
@@ -134,7 +184,20 @@
       <% @trip.session_campers.each_with_index do |s_camper, index| %>
         <tr>
           <th scope="row"> <%= index+1 %> </th>
-          <td> <%= s_camper.camper.name %> </td>
+          <td> <%= link_to s_camper.camper.name, session_camper_path(s_camper), class: 'btn black-text' %> </td>
+          <td>
+            <% if @trip.trip_group_type = "EnfClass" %>
+              <%= Student.where(session_camper: s_camper, enf_class_id: @trip.trip_group_id).first.days_attend %>
+            <% else %>
+              Cabin Trip
+            <% end %>
+          </td>
+          <td>
+            <%= wday_to_day(@trip.start.to_date.wday) %>
+          </td>
+          <td>
+            <%= wday_to_day(@trip.finish.to_date.wday) %>
+          </td>
           <td>
             <% if s_camper.camper.non_swimmer %>
               <i class="fa fa-check" aria-hidden="true"></i>

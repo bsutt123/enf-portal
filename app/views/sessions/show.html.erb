@@ -3,7 +3,7 @@
 <div class="container">
   <div class="row justify-content-center">
     <%= link_to "Edit This Session", edit_session_path(@session), class: 'd-inline btn btn-success' %>
-    <%= link_to "Delete This Session", @session, method: :delete, class: 'd-inline btn btn-danger', data: {confirm: "Are you sure you want to delete this session?"} %>
+    <%= link_to "Delete This Session", @session, method: :delete, class: 'd-inline btn btn-danger', data: {confirm: "Are you sure you want to delete this session? It is going to delete all the data that is associated with this session, including cabin lists, class lists, trips, etc. You will not be able to get this data back."} %>
     <%= link_to "Create a Class", new_session_enf_class_path(@session), class: 'd-inline btn btn-success' %>
   </div>
   <div> Session Number: <%= @session.number %> </div>
@@ -45,7 +45,7 @@
       <th>Name</th>
       <th># Campers</th>
       <th># Counselors</th>
-      <th>Link to Cabin</th>
+      <th>Link to Class</th>
     </tr>
   </thead>
   <tbody>

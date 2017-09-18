@@ -1,0 +1,2 @@
+module SessionCounselorsHelper
+end

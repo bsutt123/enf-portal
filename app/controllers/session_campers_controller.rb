@@ -23,6 +23,7 @@ class SessionCampersController < ApplicationController
       end
     end
 
+
     if @session_camper.save
       flash[:notice] = "You successfully saved the session camper"
     else
@@ -32,21 +33,22 @@ class SessionCampersController < ApplicationController
   end
 
   def destroy
+    @session_camper = SessionCamper.find(params[:id])
+    @cabin = @session_camper.cabin
+    if @session_camper.destroy
+      flash[:notice] = "The session camper was successfully deleted"
+    else
+      flash[:alert] = "There was a problem deleting your camper"
+    end
+
+    redirect_to @cabin
 
   end
 
   private
 
   def session_camper_params
-    params.require(:session_camper).permit(:table_namber, :cabin_id)
-  end
-
-  def create_student
-
-  end
-
-  def detonate_student
-
+    params.require(:session_camper).permit(:table_number, :cabin_id)
   end
 
 

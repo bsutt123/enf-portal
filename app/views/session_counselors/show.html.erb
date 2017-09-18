@@ -1,0 +1,51 @@
+<%= render partial:'sessions/session_navbar' %>
+
+<div class="container">
+  <div class="row justify-content-center">
+    <%= link_to "Edit Table #, Cabin, or Classes", edit_session_counselor_path(@session_counselor), class: 'btn btn-success margin-left-right' %>
+    <%= link_to "View Basic Counselor Info", counselor_path(@session_counselor.counselor), class: 'btn btn-success margin-left-right' %>
+    <%= link_to "Delete Session Counselor", @session_counselor, method: :delete, class: 'btn btn-danger', data: {confirm: "Are you sure you want to delete this Session Counselor? It will remove everything that they have associated with them including their connections to trips, classes, and cabins."} %>
+  </div>
+
+
+  <h4> Session Counselor Info </h4>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Cabin</th>
+          <th>Table #</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr>
+            <td> <%= @session_counselor.counselor.name %> </td>
+            <td> <%= @session_counselor.cabin.number %> </td>
+            <td> <%= @session_counselor.table_number %> </td>
+          </tr>
+      </tbody>
+    </table>
+
+  <h4> Class List </h4>
+    <h6> Click on a class name to be redirected to that class's main page </h6>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Name</th>
+          <th>Period</th>
+          <th>Days Attend</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @session_counselor.instructors.each_with_index do |instructor, index| %>
+          <tr>
+            <th> <%= index+1 %></th>
+            <td> <%= link_to instructor.enf_class.name, session_enf_class_path(instructor.session_counselor.session, instructor.enf_class), class: 'btn black-text' %> </td>
+            <td> <%= format_period(instructor.enf_class.period) %> </td>
+            <td> <%= instructor.days_attend %> </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+</div>

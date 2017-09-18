@@ -72,7 +72,7 @@ class CounselorsController < ApplicationController
   private
 
   def counselor_params
-    params.require(:counselor).permit(:name, :lifegaurd, :wfa, :driver)
+    params.require(:counselor).permit(:name, :lifeguard, :wfa, :driver)
   end
 
 end

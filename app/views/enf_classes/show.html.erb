@@ -23,9 +23,9 @@
       <% @enf_class.session_counselors.each_with_index do |s_counselor, index| %>
         <tr>
           <th scope="row"> <%= index+1 %> </th>
-          <td> <%= s_counselor.counselor.name %> </td>
+          <td> <%= link_to s_counselor.counselor.name, session_counselor_path(s_counselor), class: 'btn black-text' %> </td>
           <td>
-            <% if s_counselor.counselor.lifegaurd %>
+            <% if s_counselor.counselor.lifeguard %>
               <i class="fa fa-check" aria-hidden="true"></i>
             <% end %>
           </td>
@@ -50,6 +50,7 @@
       <tr>
         <th>#</th>
         <th>Name</th>
+        <th>Days Attend this Class </th>
         <th>Non Swimmer?</th>
         <th>Food Allergies?</th>
         <th>Medications?</th>

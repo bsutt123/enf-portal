@@ -4,7 +4,27 @@
   <div class="row">
     <%= link_to "Add Classes", edit_session_camper_path(@session_camper), class: 'btn btn-success' %>
   </div>
+
+
+  <h4> Camper Info </h4>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Cabin</th>
+          <th>Table #</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr>
+            <td> <%= @session_camper.camper.name %> </td>
+            <td> <%= link_to @session_camper.cabin.number, session_cabin_path(@session_camper.session, @session_camper.cabin), class: 'btn black-text' %> </td>
+            <td> <%= @session_camper.table_number %> </td>
+          </tr>
+      </tbody>
+    </table>
   <h4> Class List </h4>
+  <h6> Click on a class to redirect to that classes main page </h6>
     <table class="table table-striped">
       <thead>
         <tr>
@@ -18,7 +38,7 @@
         <% @session_camper.students.each_with_index do |student, index| %>
           <tr>
             <th> <%= index+1 %></th>
-            <td> <%= student.enf_class.name %> </td>
+            <td> <%= link_to student.enf_class.name, session_enf_class_path(student.session_camper.session, student.enf_class), class: 'btn black-text' %> </td>
             <td> <%= format_period(student.enf_class.period) %> </td>
             <td> <%= student.days_attend %> </td>
           </tr>

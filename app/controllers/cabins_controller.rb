@@ -55,7 +55,7 @@ class CabinsController < ApplicationController
 
   def destroy
     @cabin = Cabin.find(params[:id])
-    authorize @cabin
+    
     if @cabin.destroy
       flash[:notice] = "Cabin was successfully deleted."
     else

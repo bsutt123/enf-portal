@@ -36,7 +36,7 @@ class EnfClassesController < ApplicationController
 
     if @enf_class.destroy
       flash[:notice] = "You successfully destroyed the class"
-      redirect_to @session
+      redirect_to session_path(@session, start_date: @session.start)
     else
       flash[:alert] = "There was a problem destroying the class."
       redirect_to [@session, @enf_class]

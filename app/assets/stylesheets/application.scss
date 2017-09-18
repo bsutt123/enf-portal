@@ -33,6 +33,10 @@ $color-map: (
   background-color: map-get($color-map,primary);
 }
 
+.margin-bottom {
+  margin-bottom: 1rem;
+}
+
 .margin-zero {
   margin: 0;
 }

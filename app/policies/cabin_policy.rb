@@ -15,7 +15,7 @@ class CabinPolicy < ApplicationPolicy
     user.admin?
   end
 
-  def delete?
+  def destroy?
     user.admin?
   end
 

@@ -10,7 +10,7 @@ require 'faker'
 
 Counselor.where(name: "Brady").first_or_create!(
   driver: true,
-  lifegaurd: true,
+  lifeguard: true,
   wfa: true
 )
 User.where(email: "bsutt123@gmail.com").first_or_create!(
@@ -21,7 +21,7 @@ User.where(email: "bsutt123@gmail.com").first_or_create!(
 )
 Counselor.where(name: "Standard").first_or_create!(
   name: "Standard",
-  lifegaurd: Faker::Boolean.boolean,
+  lifeguard: Faker::Boolean.boolean,
   wfa: Faker::Boolean.boolean,
   driver: Faker::Boolean.boolean,
 )
@@ -44,7 +44,7 @@ end
 20.times do
   counselor = Counselor.create!(
     name:Faker::GameOfThrones.character,
-    lifegaurd: Faker::Boolean.boolean,
+    lifeguard: Faker::Boolean.boolean,
     wfa: Faker::Boolean.boolean,
     driver: Faker::Boolean.boolean
   )
@@ -157,14 +157,14 @@ sessions.each do |session|
       period: class_info[1]
     )
 
-    # class_campers = session_campers.sample(rand(8..12))
-    # class_campers.each do |camper|
-    #   Student.create!(
-    #     enf_class: enf_class,
-    #     session_camper: camper,
-    #     days_attend: "every"
-    #   )
-    # end
+    class_campers = session_campers.sample(rand(8..12))
+    class_campers.each do |camper|
+      Student.create!(
+        enf_class: enf_class,
+        session_camper: camper,
+        days_attend: "every"
+      )
+    end
 
     class_counselors = session_counselors.sample(rand(2..3))
     class_counselors.each do |counselor|

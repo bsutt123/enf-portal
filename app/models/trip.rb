@@ -7,13 +7,13 @@ class Trip < ApplicationRecord
 
   has_one :food
 
-  has_many :trip_campers
+  has_many :trip_campers, :dependent => :destroy
   has_many :session_campers, :through => :trip_campers
 
-  has_many :trip_counselors
+  has_many :trip_counselors, :dependent => :destroy
   has_many :session_counselors, :through => :trip_counselors
 
-  has_many :trip_vans
+  has_many :trip_vans, :dependent => :destroy
   has_many :session_vans, :through => :trip_vans
 
   belongs_to :start_day, :class_name => "Day", :foreign_key => 'start_day_id'

@@ -5,11 +5,30 @@
     <%= link_to "Delete this Cabin", [@cabin.session, @cabin], method: :delete, class: 'd-inline btn btn-danger', data: {confirm: "Are you sure you want to delete this cabin"} %>
   </div>
   <div class="row">
-    <h3> Cabin Info </h3>
+    <h4> Cabin At A Glance </h4>
   </div>
-  <div> Number: <%= @cabin.number %> </div>
-  <div> Session: <%= @cabin.session[:identifier] %> </div>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th> Cabin Name </th>
+        <th> Session </th>
+        <th># Counselors</th>
+        <th># Campers</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td> <%= @cabin.number %> </td>
+          <td> <%= @cabin.session.identifier %> </td>
+          <td> <%= @cabin.session_counselors.count %> </td>
+          <td> <%= @cabin.session_campers.count %> </td>
+        </tr>
+    </tbody>
+  </table>
 
+  <br>
+  <h5> In order to see a campers or counselors class schedule and session specific details, please
+    click on the camper or counselor name below </h5>
   <h5> Counselors </h5>
   <table class="table table-striped">
     <thead>
@@ -25,9 +44,9 @@
       <% @cabin.session_counselors.each_with_index do |s_counselor, index| %>
         <tr>
           <th scope="row"> <%= index+1 %> </th>
-          <td> <%= s_counselor.counselor.name %> </td>
+          <td> <%= link_to s_counselor.counselor.name, session_counselor_path(s_counselor), class: 'btn black-text' %> </td>
           <td>
-            <% if s_counselor.counselor.lifegaurd %>
+            <% if s_counselor.counselor.lifeguard %>
               <i class="fa fa-check" aria-hidden="true"></i>
             <% end %>
           </td>
@@ -55,14 +74,13 @@
         <th>Non Swimmer?</th>
         <th>Has a food allergies?</th>
         <th>Has medication(s) </th>
-        <th>Details</th>
       </tr>
     </thead>
     <tbody>
       <% @cabin.session_campers.each_with_index do |s_camper, index| %>
         <tr>
           <th scope="row"> <%= index+1 %> </th>
-          <td> <%= s_camper.camper.name %> </td>
+          <td> <%= link_to s_camper.camper.name, session_camper_path(s_camper), class: 'btn black-text' %> </td>
           <td>
             <% if s_camper.camper.non_swimmer %>
               <i class="fa fa-check" aria-hidden="true"></i>
@@ -78,7 +96,6 @@
               <i class="fa fa-check" aria-hidden="true"></i>
             <% end %>
           </td>
-          <td> <%= link_to "Class Details", session_camper_path(s_camper), class: 'btn black-text' %> </td>
         </tr>
       <% end %>
     </tbody>

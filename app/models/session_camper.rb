@@ -6,10 +6,10 @@ class SessionCamper < ApplicationRecord
   belongs_to :camper
 
 
-  has_many :trip_campers
+  has_many :trip_campers, :dependent => :destroy
   has_many :trips, :through => :trip_campers
 
-  has_many :students, inverse_of: :session_camper
+  has_many :students, inverse_of: :session_camper, :dependent => :destroy
   has_many :enf_classes, :through => :students
 
   accepts_nested_attributes_for :students

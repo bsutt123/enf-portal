@@ -35,7 +35,7 @@ ActiveRecord::Schema.define(version: 20170914205104) do
 
   create_table "counselors", force: :cascade do |t|
     t.string "name"
-    t.boolean "lifegaurd", default: false
+    t.boolean "lifeguard", default: false
     t.boolean "wfa", default: false
     t.boolean "driver", default: false
     t.datetime "created_at", null: false

@@ -57,7 +57,7 @@ module ApplicationHelper
   end
 
   def alternating_period?(enf_class)
-    enf_class.one_and_two_mwf? || enf_class.period.one_and_two_tts? || enf_class.three_and_four_mwf? || enf_class.three_and_four_tts?
+    enf_class.one_and_two_mwf? || enf_class.one_and_two_tts? || enf_class.three_and_four_mwf? || enf_class.three_and_four_tts?
   end
   def format_underscores(string)
     string.split("_").join(" ")
