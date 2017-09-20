@@ -23,6 +23,12 @@ class Trip < ApplicationRecord
     where("start BETWEEN :trip_start AND :trip_end OR finish BETWEEN :trip_start AND :trip_end OR start <= :trip_start AND finish >= :trip_end", {trip_start: trip.start, trip_end: trip.finish})
   end
 
+  def self.overlaps_lunch_on(date)
+    lunch_start = DateTime.new(date.year, date.month, date.day, 12,0,0)
+    lunch_end = DateTime.new(date.year, date.month, date.day, 2,15,0)
+    where("start BETWEEN :lunch_start AND :lunch_end OR finish BETWEEN :lunch_start AND :lunch_end OR start <= :lunch_start AND finish >= :lunch_end", {lunch_start: lunch_start, lunch_end: lunch_end})
+  end
+
 
   def self.day_trips_off_campus(date)
     time_line = (date..(date+1))

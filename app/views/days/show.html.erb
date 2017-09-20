@@ -1,6 +1,26 @@
 <%= render partial:"day_navbar", locals: {day: @day} %>
 
 <div class="container">
+  <h2> Vans on Campus at Lunch Today </h2>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th> Van </th>
+        <th> Capacity </th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @available_session_vans.each_with_index do |s_van, index| %>
+        <tr>
+          <th scope="row"> <%= index+1 %> </th>
+          <td> <%= s_van.van.number %> </td>
+          <td> <%= s_van.van.capacity %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
   <h2> Trips Today by Class Name </h2>
   <h5> Day Trips </h5>
   <table class="table table-striped">

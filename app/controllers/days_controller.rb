@@ -6,25 +6,18 @@ class DaysController < ApplicationController
     @multi_day_trip_ends = Trip.multi_day_ends(date)
     @multi_day_trip_starts = Trip.multi_day_starts(date)
     @multi_day_all_day = Trip.multi_day_all_day(date)
+    overlapping_lunch = Trip.overlaps_lunch_on(date)
+    s_vans = @day.session.session_vans
+    used_s_vans = TripVan.where(trip_id: overlapping_lunch.pluck(:id)).pluck(:session_van_id)
+    @available_session_vans = s_vans.where.not(id: used_s_vans)
   end
 
-  def edit
-  end
+  def today
+    #@day = Day.find_by(date: Date.today)
+    @day = Trip.first.start_day
 
-  def new
-
-  end
-
-  def create
-
-  end
-
-  def update
 
   end
 
-  def destroy
-
-  end
 
 end
