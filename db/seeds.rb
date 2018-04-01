@@ -196,7 +196,7 @@ sessions.each do |session|
       session_counselor: session_counselors.sample,
       trip_group_id: enf_classes.sample[:id],
       trip_group_type: "EnfClass",
-      approved: true,
+      approved: false,
     )
     trip_group = trip.trip_group
     trip_group.session_counselors.each do |s_counselor|
